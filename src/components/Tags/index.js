@@ -34,6 +34,7 @@ class Tags extends Component {
     } 
 
     showHideTagInput = () => {
+        console.log('addtag')
         this.setState({ addtag: !this.state.addtag })
     }
 
@@ -42,7 +43,8 @@ class Tags extends Component {
     }
 
     render() {          
-        const { data } = this.props        
+        const { data, editable } = this.props      
+        console.log('edit', editable)  
         return (
             <Wrapper>                
                 { data && data.map((name, index) => {
@@ -50,14 +52,18 @@ class Tags extends Component {
                             <Tag name={name} key={index} onRemove={ () => this.remove(index) } />
                         )
                     }) 
-                }                
-                <AddButton onClick={ this.showHideTagInput } style={ this.state.addtag? hide:null }>Add</AddButton>                
+                }  
+                { editable ? 
+                    <AddButton onClick={ this.showHideTagInput } style={ this.state.addtag? hide:null }>Add</AddButton> : <AddButton disable>Add</AddButton>
+                }                                        
                 { this.state.addtag &&
                     <Input>
                         <MuiThemeProvider>
-                            <TextField   
+                            <TextField  
+                                name='input' 
                                 ref={ (input) => { this.tagInput = input }} 
-                                onKeyDown={this.onInputTag}                                                                                                                      
+                                onKeyDown={this.onInputTag}  
+                                onBlur={this.showHideTagInput}                                                                                                                    
                             />              
                         </MuiThemeProvider>
                     </Input>

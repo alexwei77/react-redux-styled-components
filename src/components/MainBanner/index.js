@@ -14,12 +14,12 @@ import {
 
 class MainBanner extends React.Component {
     
-    pageNavigation = () => {
-        if(window.localStorage.getItem('profileId')){
-            this.props.type === 'talent' ? browserHistory.push('/profile/talent') : browserHistory.push('/profile/employer')    
+    pageNavigation = () => {  
+        if(this.props.type === 'talent'){
+            window.localStorage.getItem('profileId') ? browserHistory.push('/profile/talent') : browserHistory.push('/signup/talent')
         } else {
-            this.props.type === 'talent' ? browserHistory.push('/signup/talent') : browserHistory.push('/signup/employer')
-        }        
+            browserHistory.push('/signup/employer')
+        }
     }
 
     render() {

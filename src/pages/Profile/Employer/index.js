@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { browserHistory } from 'react-router'
+import { connect } from 'react-redux'
 
 import CircularProgressbar from '../../../components/CircularProgressbar'
 import Header from '../../../components/Header'
@@ -43,7 +44,7 @@ class TagList extends Component {
 
     render() {
         return (
-            <Tags data={ this.state.tags } removeTag={(index) => this.removeTag(index)} addTag={ (text) => this.addTag(text) } />
+            <Tags data={ this.state.tags } editable={this.props.editable} removeTag={(index) => this.removeTag(index)} addTag={ (text) => this.addTag(text) } />
         )
     }
 }
@@ -64,6 +65,7 @@ class Employer extends Component {
 
     render() {
         const { percentage, vacancies, locations } = this.state
+        const { isEditable } = this.props
         return (
             <Wrapper>
                 <Header edit/>
@@ -72,7 +74,9 @@ class Employer extends Component {
                     <Avatar src={Images.user} alt="user" />
                     <LocationWrapper>
                         <h1>Locations</h1>
-                        <TagList data={locations} />
+                        { locations && isEditable ?
+                            <TagList editable={isEditable} data={locations} /> : <TagList data={locations} />
+                        }
                     </LocationWrapper>
                 </UserWrapper>
                 <DetailWrapper>
@@ -116,7 +120,9 @@ class Employer extends Component {
                 </Info>
                 <TagWrapper>
                     <h1>Vacancies</h1>
-                    <TagList data={vacancies} />
+                    { vacancies && isEditable ?
+                        <TagList editable={isEditable} data={vacancies} /> : <TagList data={vacancies} />
+                    }
                 </TagWrapper>
                 <FieldWrapper>
                     <h1>Invites</h1>
@@ -139,4 +145,11 @@ class Employer extends Component {
     }
 }
 
-export default Employer
+// Map state to props
+const mapStateToProps = (state) => {
+    return {  
+        isEditable: state.auth.isEditable    
+    }
+}
+
+export default connect(mapStateToProps)(Employer)

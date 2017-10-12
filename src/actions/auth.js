@@ -32,3 +32,10 @@ export function changeType(signUpType){
         signUpType
     };
 }
+
+export function getEditState(flag){    
+    return {
+        type: Types.EDIT_TYPE,
+        flag
+    };
+}

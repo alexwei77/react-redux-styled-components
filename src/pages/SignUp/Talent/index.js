@@ -60,12 +60,6 @@ class SignUp extends Component {
         }
     }
 
-    componentDidMount() {        
-        if(session()){            
-            browserHistory.push('/profile/talent')
-        }
-    }
-
     responseGoogle(response) {
         console.log('google-response', response) 
         const profile = response.profileObj
@@ -81,8 +75,8 @@ class SignUp extends Component {
             .then(response => {
                 window.localStorage.setItem('profileId', response)
                 browserHistory.push('/profile/talent')
-            }).catch((err) => {
-                console.log(err)
+            }).catch(() => {
+                // TODO: any processing
             })  
     }
 
@@ -101,8 +95,8 @@ class SignUp extends Component {
             .then(response => {
                 window.localStorage.setItem('profileId', response)
                 browserHistory.push('/profile/talent')
-            }).catch((err) => {
-                console.log(err)
+            }).catch(() => {
+                // TODO: any processing
             })  
     }
 
@@ -151,7 +145,7 @@ class SignUp extends Component {
                     <Heading>Sign up now</Heading>
                     <ButtonWrapper>
                         <GoogleLogin
-                            clientId="your client id"
+                            clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
                             onSuccess={this.responseGoogle}
                             onFailure={this.responseGoogle}
                         >
@@ -162,7 +156,7 @@ class SignUp extends Component {
                         </GoogleLogin>                        
                         <FacebookButton>
                             <FacebookLogin
-                                appId="your facebook id"
+                                appId="459046371113157"
                                 autoLoad={false}
                                 fields="name,email,picture,location"
                                 callback={this.responseFacebook}

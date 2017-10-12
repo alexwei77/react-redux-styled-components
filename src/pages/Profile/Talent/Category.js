@@ -55,6 +55,7 @@ class Category extends Component {
     }
 
     componentWillMount(){
+        console.log('Category')
         subRolesForSave = {}        
     }
 
@@ -80,7 +81,11 @@ class Category extends Component {
     }
 
     pageNavigation = (path) => {
-        browserHistory.push(path)
+        if(window.localStorage.getItem('profileId')){
+            browserHistory.push('/')
+        } else {
+            browserHistory.push(path)
+        }        
     }
 
     getSubRoles = (values) => {
@@ -135,9 +140,9 @@ class Category extends Component {
         this.props.actions.postSignup2Data('Signup2', obj)
             .then(() => {
                  browserHistory.push('/profile/talent/submition')
-            }).catch((err) => {
-                console.log(err)
-            })      
+            }).catch(() => {
+                // TODO: any processing
+            })  
     }
 
     render() {

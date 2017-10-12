@@ -40,25 +40,16 @@ const styles = {
 }
 
 class Submition extends Component {
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state = {
-            locations: [],
-            beverage: '',
-            status: null,
+            locations: this.props.locations,
+            beverage: this.props.beverage,
+            status: this.props.status,
             urls: [],
             url: '',
             isValidate: false
         }
-    }
-
-    componentWillMount() {
-        const { locations, status, beverage } = this.props
-        this.setState({
-            locations: locations,
-            status: status,
-            beverage: beverage
-        })
     }
 
     addLocation = (text) => {        
@@ -74,12 +65,14 @@ class Submition extends Component {
     }
 
     getBeverage = (beverage) => {
+        console.log('beverage')
         this.setState({
             beverage: beverage
         })
     }
 
     getStatus = (num) => {
+        console.log('status')
         this.setState({
             status: num
         })
@@ -119,18 +112,18 @@ class Submition extends Component {
             Social: this.state.urls,
             Status: this.state.status
         }
-        console.log('data', data)
+        console.log('submit', data)
         this.props.actions.getSubmitionData(data.profileID, data.Locations, data.Beverage, data.Social, data.Status)
         this.props.actions.postSubmitionData('Signup3', data)
             .then(() => {
                 browserHistory.push(path)
-            }).catch((err) => {
-                console.log(err)
+            }).catch(() => {
+                // TODO: any processing
             })         
     }
 
     render() {        
-        const { locations, beverage, status, isValidate } = this.state
+        const { locations, beverage, status, isValidate } = this.state        
         return (
             <Wrapper>
                 <Header visible percent={3} save/>

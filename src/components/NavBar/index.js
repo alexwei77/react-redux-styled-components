@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { browserHistory } from 'react-router'
 import $ from 'jquery'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import Model from '../Model'
 import { 
@@ -14,6 +16,7 @@ import {
     LoginButton, 
     Container } from './Style'
 import Images from '../../themes/images'
+import { getEditState } from '../../actions/auth'
 
 class Navigation extends Component {
     constructor() {
@@ -21,7 +24,8 @@ class Navigation extends Component {
         this.state = {
             isActive: false,
             isHover: false,
-            switched: false
+            switched: false,
+            isEditable: false
         }      
     }
     
@@ -45,6 +49,15 @@ class Navigation extends Component {
         browserHistory.push(path)
     } 
     
+    toggleEdit = () => {
+        let isEditable = this.state.isEditable ? false : true
+        console.log('afdsf', isEditable, this.state.isEditable)
+        this.props.actions.getEditState(isEditable);
+        this.setState({
+            isEditable: isEditable
+        })
+    }
+
     render() {
         const { landing, save, edit } = this.props
         return (
@@ -53,7 +66,7 @@ class Navigation extends Component {
                     <Model />
                 </ModelWrapper>
                 <SaveButton save={save}>Save for later</SaveButton>
-                <EditButton edit={edit}>Edit profile</EditButton>
+                <EditButton edit={edit} onClick={() =>this.toggleEdit()}>Edit profile</EditButton>
                 { !this.state.isActive ? 
                     <Menu save={save} edit={edit} onClick={this.toggleNavigation}/> :  <Img onClick={this.toggleNavigation} src={Images.xButton} alt="" style={{width:'42px'}}/>
                 }                                             
@@ -73,4 +86,13 @@ class Navigation extends Component {
     }
 }
 
-export default Navigation
+// Map action to props
+const mapDispatchToProps = (dispatch) => {
+    return {
+        actions: bindActionCreators({
+            getEditState
+        }, dispatch)
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Navigation)

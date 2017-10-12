@@ -33,7 +33,6 @@ export const AddButton = styled.div`
     -webkit-transition: 0.5s;
     
     &:hover {
-        cursor: pointer;
-        background-color: #ebf1f0;
+        ${props =>props.disable ? '':'cursor: pointer; background-color:#ebf1f0;'}                
     }
 `
