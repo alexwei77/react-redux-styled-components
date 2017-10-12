@@ -2,7 +2,7 @@ import $ from 'jquery';
 
 export const request = (step, data) => {
     
-    const url = `https://my.agentify.me/api/V0/Profile/${step}`    
+    const url = `api${step}`    
     console.log(url, data); 
     
     const query = {        
