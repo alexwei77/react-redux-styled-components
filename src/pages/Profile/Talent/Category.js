@@ -55,7 +55,6 @@ class Category extends Component {
     }
 
     componentWillMount(){
-        console.log('Category')
         subRolesForSave = {}        
     }
 
@@ -81,11 +80,7 @@ class Category extends Component {
     }
 
     pageNavigation = (path) => {
-        if(window.localStorage.getItem('profileId')){
-            browserHistory.push('/')
-        } else {
-            browserHistory.push(path)
-        }        
+        browserHistory.push(path)
     }
 
     getSubRoles = (values) => {
@@ -137,10 +132,12 @@ class Category extends Component {
         }
         console.log('data', obj)
         this.props.actions.getSubRolesAndTechs(roles, subRolesForSave, this.state.tags)
-        // this.props.actions.postSignup2Data('Singup2', obj)
-            // .then(() => {
+        this.props.actions.postSignup2Data('Signup2', obj)
+            .then(() => {
                  browserHistory.push('/profile/talent/submition')
-            // })       
+            }).catch((err) => {
+                console.log(err)
+            })      
     }
 
     render() {
@@ -288,7 +285,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         actions: bindActionCreators({
             getSubRolesAndTechs,
-            // postSignup2Data
+            postSignup2Data
         }, dispatch)
     }
 }

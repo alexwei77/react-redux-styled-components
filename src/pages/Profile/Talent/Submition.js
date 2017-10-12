@@ -40,16 +40,25 @@ const styles = {
 }
 
 class Submition extends Component {
-    constructor(props){
-        super(props)
+    constructor(){
+        super()
         this.state = {
-            locations: this.props.locations,
-            beverage: this.props.beverage,
-            status: this.props.status,
+            locations: [],
+            beverage: '',
+            status: null,
             urls: [],
             url: '',
             isValidate: false
         }
+    }
+
+    componentWillMount() {
+        const { locations, status, beverage } = this.props
+        this.setState({
+            locations: locations,
+            status: status,
+            beverage: beverage
+        })
     }
 
     addLocation = (text) => {        
@@ -65,14 +74,12 @@ class Submition extends Component {
     }
 
     getBeverage = (beverage) => {
-        console.log('beverage')
         this.setState({
             beverage: beverage
         })
     }
 
     getStatus = (num) => {
-        console.log('status')
         this.setState({
             status: num
         })
@@ -112,17 +119,18 @@ class Submition extends Component {
             Social: this.state.urls,
             Status: this.state.status
         }
-        console.log('submit', data)
+        console.log('data', data)
         this.props.actions.getSubmitionData(data.profileID, data.Locations, data.Beverage, data.Social, data.Status)
-        // this.props.actions.postSubmitionData('Signup3', data)
-            // .then(() => {
+        this.props.actions.postSubmitionData('Signup3', data)
+            .then(() => {
                 browserHistory.push(path)
-            // })       
+            }).catch((err) => {
+                console.log(err)
+            })         
     }
 
     render() {        
         const { locations, beverage, status, isValidate } = this.state
-        console.log('mount')
         return (
             <Wrapper>
                 <Header visible percent={3} save/>
@@ -221,7 +229,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         actions: bindActionCreators({
             getSubmitionData,
-            // postSubmitionData
+            postSubmitionData
         }, dispatch)
     }
 }
