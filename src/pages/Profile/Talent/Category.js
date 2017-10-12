@@ -5,6 +5,7 @@ import { browserHistory } from 'react-router'
 import {Form, Checkbox, Radio, RadioGroup } from 'react-form'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import ReactLoading from 'react-loading'
 
 import { getSubRolesAndTechs, postSignup2Data } from '../../../actions/talent'
 import Header from '../../../components/Header'
@@ -50,7 +51,8 @@ class Category extends Component {
             product: "Product Analyst, Product Marketign Manager, Product Manager, Product Line Director",
             marketing: "Growth Hacker, marketing Manager, SEO Manager, Community Manager, Copy",
             design: "UX Researcher, UI Designer, UI/UX Designer, Art Director, Digital Designer",
-            finance: "Analyst, Accountant, Controller, Finance Manager, CEO"   
+            finance: "Analyst, Accountant, Controller, Finance Manager, CEO",
+            isLoading: false  
         }
     }
 
@@ -135,18 +137,23 @@ class Category extends Component {
             SubRoles: subRoles,
             Technologies: this.state.tags
         }
-        console.log('data', obj)
+        this.setState({ isLoading: true })
         this.props.actions.getSubRolesAndTechs(roles, subRolesForSave, this.state.tags)
         this.props.actions.postSignup2Data('Signup2', obj)
             .then(() => {
-                 browserHistory.push('/profile/talent/submition')
+                setTimeout(() => {
+                    browserHistory.push('/profile/talent/submition')
+                }, 3000)                  
             }).catch(() => {
-                // TODO: any processing
+                setTimeout(() => {
+                    this.setState({ isLoading: false })
+                    alert("Failed!")                    
+                }, 2000) 
             })  
     }
 
     render() {
-        const { tags } = this.state
+        const { tags, isLoading } = this.state
         return (
             <Wrapper>   
                 <Form 
@@ -262,10 +269,12 @@ class Category extends Component {
                                 <TagWrapper>
                                     <TagList data={ tags } removeTag={(index) => this.removeTag(index)} />
                                 </TagWrapper>
-                                <Navigation>
-                                    <PrevButton prev onClick={() => this.pageNavigation('/signup/talent')}><Img src={Images.leftArrow} alt="left" /></PrevButton>
-                                    <NextButton type="submit">Next<Img right src={Images.wRightArrow} alt="right" /></NextButton>                       
-                                </Navigation>
+                                { isLoading ? <Navigation><ReactLoading type="spinningBubbles" color="#4cbf69" height='70' width='70' /></Navigation> :
+                                    <Navigation>
+                                        <PrevButton prev onClick={() => this.pageNavigation('/signup/talent')}><Img src={Images.leftArrow} alt="left" /></PrevButton>
+                                        <NextButton type="submit">Next<Img right src={Images.wRightArrow} alt="right" /></NextButton>                       
+                                    </Navigation>
+                                }
                             </Content>                     
                             </form>
                         )

@@ -6,13 +6,15 @@ import GoogleLogin from 'react-google-login'
 import FacebookLogin from 'react-facebook-login'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux' 
+import ReactLoading from 'react-loading'
 
 import Header from '../../../components/Header'
 import { 
     Wrapper, 
     Content, 
     Heading, 
-    ButtonWrapper, 
+    ButtonWrapper,
+    SpinWrapper, 
     GoogleButton, 
     FacebookButton, 
     CircleButton, 
@@ -56,7 +58,8 @@ class SignUp extends Component {
             isValidate: false,
             isFullName: false,
             isEmail: false,
-            isLocation: false,            
+            isLocation: false, 
+            isLoading: false           
         }
     }
 
@@ -112,11 +115,12 @@ class SignUp extends Component {
         if(name === 'location'){
             this.setState({ isLocation: Validate.palceValidate(value)})
         }
+        e.preventDefault()
     }
 
     handleSignUp = () => {                       
         const { isFullName, isEmail, isLocation } = this.state
-        this.setState({ isValidate: true})
+        this.setState({ isValidate: true, isLoading: true })
         if(!isFullName || !isEmail || !isLocation ){
             return
         }
@@ -127,17 +131,18 @@ class SignUp extends Component {
             Location: this.state.location
         }
         this.props.actions.signUpRequest('Signup1', obj)
-            .then(() => {
-                    console.log('signup')
+            .then(() => {                
+                setTimeout(() => {
                     browserHistory.push('/profile/talent')
+                }, 5000)                    
             })
             .catch(() => {
-                // TODO: any processing
+                this.setState({ isLoading: false })
             })               
     }
 
     render() {
-        const { isFullName, isEmail, isLocation, isValidate } = this.state             
+        const { isFullName, isEmail, isLocation, isValidate, isLoading } = this.state             
         return (
             <Wrapper>                      
                 <Header visible percent={1}/>                       
@@ -223,12 +228,14 @@ class SignUp extends Component {
                     { !isLocation && isValidate ?
                         <UnderLine error></UnderLine> : <UnderLine></UnderLine>
                     }
-                    <ButtonWrapper signup>
-                        { !isValidate || (isFullName && isEmail && isLocation) ?
-                            <SignUpButton active onClick={this.handleSignUp}>Sign up</SignUpButton> :
-                            <SignUpButton onClick={this.handleSignUp}>Sign up</SignUpButton>
-                        }
-                    </ButtonWrapper>
+                    { isLoading ? <SpinWrapper><ReactLoading type="spinningBubbles" color="#4cbf69" height='50' width='50' /></SpinWrapper> :
+                        <ButtonWrapper signup>
+                            { !isValidate || (isFullName && isEmail && isLocation) ?
+                                <SignUpButton active onClick={this.handleSignUp}>Sign up</SignUpButton> :
+                                <SignUpButton onClick={this.handleSignUp}>Sign up</SignUpButton>
+                            }
+                        </ButtonWrapper>
+                    }                    
                 </Content>
             </Wrapper>
         )

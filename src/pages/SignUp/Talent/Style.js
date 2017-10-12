@@ -36,6 +36,16 @@ export const ButtonWrapper = styled.div`
         width: auto !important;
     }
 `
+export const SpinWrapper = styled.div`
+    margin: 75px 0 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media(max-width: 767px){        
+        margin: 35px 0 0;     
+    }
+`
 export const GoogleButton =styled.div`
     display: flex;
     align-items: center;

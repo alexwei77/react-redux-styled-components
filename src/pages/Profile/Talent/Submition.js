@@ -4,6 +4,7 @@ import TextField from 'material-ui/TextField'
 import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import ReactLoading from 'react-loading'
 
 import Header from '../../../components/Header'
 import TagList from '../../../components/TagList'
@@ -103,8 +104,11 @@ class Submition extends Component {
         this.urlInput.input.value = 'https://'
         this.urlInput.focus()
     }
+    prevPageNavigation = (path) => {
+        browserHistory.push(path)
+    }
 
-    pageNavigation = (path) => {
+    nextPageNavigation = (path) => {
         const data = {
             ProfileId: window.localStorage.getItem('profileId'),
             Locations: this.state.locations,
@@ -115,15 +119,20 @@ class Submition extends Component {
         console.log('submit', data)
         this.props.actions.getSubmitionData(data.profileID, data.Locations, data.Beverage, data.Social, data.Status)
         this.props.actions.postSubmitionData('Signup3', data)
-            .then(() => {
-                browserHistory.push(path)
+            .then(() => {                
+                setTimeout(() => {
+                    browserHistory.push(path)
+                }, 3000)   
             }).catch(() => {
-                // TODO: any processing
+                setTimeout(() => {
+                    this.setState({ isLoading: false })
+                    alert("Failed!")                    
+                }, 2000) 
             })         
     }
 
     render() {        
-        const { locations, beverage, status, isValidate } = this.state        
+        const { locations, beverage, status, isValidate, isLoading } = this.state        
         return (
             <Wrapper>
                 <Header visible percent={3} save/>
@@ -198,10 +207,12 @@ class Submition extends Component {
                             <Button active={status === 4} onClick={() => this.getStatus(4)}>Undecided<img src={Images.remove} alt="" /></Button>                    
                         </ButtonWrapper>
                     </FieldWrapper>
-                    <Navigation>
-                        <PrevButton prev onClick={() => this.pageNavigation('/profile/talent/category')}><Img src={Images.leftArrow} alt="left" /></PrevButton>
-                        <NavigationButton onClick={() => this.pageNavigation('/profile/talent/candidate')}>Submit<Img right src={Images.wRightArrow} alt="right" /></NavigationButton>                       
-                    </Navigation>
+                    { isLoading ? <Navigation><ReactLoading type="spinningBubbles" color="#4cbf69" height='70' width='70' /></Navigation> :
+                        <Navigation>
+                            <PrevButton prev onClick={() => this.prevPageNavigation('/profile/talent/category')}><Img src={Images.leftArrow} alt="left" /></PrevButton>
+                            <NavigationButton onClick={() => this.nextPageNavigation('/profile/talent/candidate')}>Submit<Img right src={Images.wRightArrow} alt="right" /></NavigationButton>                       
+                        </Navigation>
+                    }
                 </Content>
             </Wrapper>
         )
