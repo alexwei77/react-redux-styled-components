@@ -151,7 +151,7 @@ class SignUp extends Component {
                     <Heading>Sign up now</Heading>
                     <ButtonWrapper>
                         <GoogleLogin
-                            clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+                            clientId="ID"
                             onSuccess={this.responseGoogle}
                             onFailure={this.responseGoogle}
                         >
@@ -162,7 +162,7 @@ class SignUp extends Component {
                         </GoogleLogin>                        
                         <FacebookButton>
                             <FacebookLogin
-                                appId="459046371113157"
+                                appId="ID"
                                 autoLoad={false}
                                 fields="name,email,picture,location"
                                 callback={this.responseFacebook}
