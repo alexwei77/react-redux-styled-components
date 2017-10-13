@@ -54,6 +54,7 @@ export const EditButton = styled.a`
     }
     &:hover {
         cursor: pointer;
+        background-color: #333;
     }
 `
 

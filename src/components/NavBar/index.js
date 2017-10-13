@@ -58,6 +58,17 @@ class Navigation extends Component {
         })
     }
 
+    toggleAction = () => {
+        if(this.props.type === 'talent'){
+            if(window.localStorage.getItem('profileId')){
+                window.localStorage.removeItem('profileId')                
+            }
+            browserHistory.push('/signup/talent')
+        } else {
+            browserHistory.push('/signup/employer')
+        }
+    }
+
     render() {
         const { landing, save, edit } = this.props
         return (
@@ -79,10 +90,17 @@ class Navigation extends Component {
                     <li><a onClick={() => window.location.assign('https://www.facebook.com')}>Facebook</a></li>
                 </Nav>
                 <Container save={save} edit={edit}>
-                    <LoginButton />
+                    <LoginButton onClick={() =>this.toggleAction()}/>
                 </Container>                                          
             </Wrapper>
         )
+    }
+}
+
+// Map state to props
+const mapStateToProps = (state) => {
+    return {
+        type: state.auth.type
     }
 }
 
@@ -95,4 +113,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(Navigation)
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation)

@@ -37,13 +37,13 @@ export const ButtonWrapper = styled.div`
     }
 `
 export const SpinWrapper = styled.div`
-    margin: 75px 0 50px;
+    margin: 150px 0 150px;
     display: flex;
     justify-content: center;
     align-items: center;
 
     @media(max-width: 767px){        
-        margin: 35px 0 0;     
+        margin: 70px 0 70px;     
     }
 `
 export const GoogleButton =styled.div`

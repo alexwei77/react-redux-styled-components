@@ -49,7 +49,8 @@ class Submition extends Component {
             status: this.props.status,
             urls: [],
             url: '',
-            isValidate: false
+            isValidate: false,
+            isLoading: false
         }
     }
 
@@ -65,15 +66,13 @@ class Submition extends Component {
         this.setState({ locations: temp })
     }
 
-    getBeverage = (beverage) => {
-        console.log('beverage')
+    getBeverage = (beverage) => {        
         this.setState({
             beverage: beverage
         })
     }
 
-    getStatus = (num) => {
-        console.log('status')
+    getStatus = (num) => {        
         this.setState({
             status: num
         })
@@ -82,7 +81,7 @@ class Submition extends Component {
     getText = (e) => {        
         if(e.keyCode === 13 && e.target.value) {            
             this.addLocation(e.target.value)  
-            e.target.value = ''          
+            e.target.value = ''              
         }
     }
 
@@ -99,8 +98,7 @@ class Submition extends Component {
         this.setState({
             urls: temp,
             isValidate: false
-        })
-        console.log('input', this.urlInput)
+        })        
         this.urlInput.input.value = 'https://'
         this.urlInput.focus()
     }
@@ -116,8 +114,8 @@ class Submition extends Component {
             Social: this.state.urls,
             Status: this.state.status
         }
-        console.log('submit', data)
-        this.props.actions.getSubmitionData(data.profileID, data.Locations, data.Beverage, data.Social, data.Status)
+        this.setState({ isLoading: true })
+        this.props.actions.getSubmitionData(data.Locations, data.Beverage, data.Social, data.Status)
         this.props.actions.postSubmitionData('Signup3', data)
             .then(() => {                
                 setTimeout(() => {
@@ -144,7 +142,8 @@ class Submition extends Component {
                             <MuiThemeProvider>
                                 <TextField   
                                     ref={(input) => {this.tagInput = input}} 
-                                    onKeyDown={this.getText}                                                       
+                                    onKeyDown={this.getText} 
+                                    onBlur={this.blur}                                                      
                                     floatingLabelText="Type city"
                                     floatingLabelStyle={styles.floatingLabelStyle}  
                                     floatingLabelShrinkStyle={styles.floatingLabelShrinkStyle}                                
@@ -222,8 +221,7 @@ class Submition extends Component {
 // Map state to props
 const mapStateToProps = (state) => {
     const { locations, beverage, status, social } = state.talent
-    return {
-        // profileID: state.auth.profileID,
+    return {        
         locations, beverage, status, social
     }
 }

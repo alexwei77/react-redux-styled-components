@@ -1,6 +1,5 @@
 export const session = () => {
-    const profileId = window.localStorage.getItem('profileId')   
-    console.log("profileId-session", profileId) 
+    const profileId = window.localStorage.getItem('profileId')       
     let loggedIn = false
   
     if (profileId) {

@@ -14,4 +14,6 @@ export const GET_ROLES_TECH = "GET_ROLES_TECH"
 export const GET_SUBMITION_DATA = "GET_SUBMITION_DATA"
 
 /* USER */
+export const GET_USER = "GET_USER"
 export const EDIT_TYPE = "EDIT_TYPE"
+

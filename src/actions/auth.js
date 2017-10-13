@@ -26,6 +26,15 @@ export function signUpRequest(step, userInfo){
     }
 }
 
+export function getUser(firstName, lastName, email){
+    return {
+        type: Types.GET_USER,
+        firstName,
+        lastName,
+        email
+    };
+}
+
 export function changeType(signUpType){
     return {
         type: Types.SIGNUP_TYPE,

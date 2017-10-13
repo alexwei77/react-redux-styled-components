@@ -1,12 +1,13 @@
 import * as Types from '../constants/actionType'
 import { request } from '../services/request'
 
-export const getSubRolesAndTechs = (roles, subRoles, techs) => {
+export const getSubRolesAndTechs = (roles, subRoles1, subRoles2, techs) => {
     return {
         type: Types.GET_ROLES_TECH,
         roles,
-        subRoles,
-        techs
+        subRoles1,
+        subRoles2,
+        techs,
     }
 }
 
@@ -25,18 +26,10 @@ export function postSignup2Data(step, data){
         return new Promise((resolve, reject) => {
             request(step, data)
                 .then(response => {
-                    // dispatch({
-                    //     type: Types.SIGNUP_SUCCESS,
-                    //     data: response.data
-                    // });
                     resolve(true);
                 })
                 .catch(error => {
-                    console.log('Error', error)
-                    // dispatch({
-                    //     type: Types.SIGNUP_FAIL,
-                    //     error: error
-                    // });
+                    console.log('Error', error)                    
                     reject(false);
                 })
         })
@@ -47,19 +40,11 @@ export function postSubmitionData(step, data){
     return function (dispatch) {
         return new Promise((resolve, reject) => {
             request(step, data)
-                .then(response => {
-                    // dispatch({
-                    //     type: Types.SIGNUP_SUCCESS,
-                    //     data: response.data
-                    // });
+                .then(response => {                   
                     resolve(true);
                 })
                 .catch(error => {
-                    console.log('Error', error)
-                    // dispatch({
-                    //     type: Types.SIGNUP_FAIL,
-                    //     error: error
-                    // });
+                    console.log('Error', error)                    
                     reject(false);
                 })
         })

@@ -25,7 +25,7 @@ import {
     SignUpButton } from './Style'
 import Images from '../../../themes/images'
 import { request } from '../../../services/request'
-import { signUpRequest } from '../../../actions/auth'
+import { signUpRequest, getUser } from '../../../actions/auth'
 import * as Validate from '../../../constants/validate'
 
 const styles = {
@@ -130,6 +130,7 @@ class SignUp extends Component {
             LastName: this.state.fullname.split(' ')[1],
             Location: this.state.location
         }
+        this.props.actions.getUser(obj.FirstName, obj.LastName, obj.Email)
         this.props.actions.signUpRequest('Signup1', obj)
             .then(() => {                
                 setTimeout(() => {
@@ -228,7 +229,7 @@ class SignUp extends Component {
                     { !isLocation && isValidate ?
                         <UnderLine error></UnderLine> : <UnderLine></UnderLine>
                     }
-                    { isLoading ? <SpinWrapper><ReactLoading type="spinningBubbles" color="#4cbf69" height='50' width='50' /></SpinWrapper> :
+                    { isLoading ? <SpinWrapper><ReactLoading type="spinningBubbles" color="#4cbf69" height='70' width='70' /></SpinWrapper> :
                         <ButtonWrapper signup>
                             { !isValidate || (isFullName && isEmail && isLocation) ?
                                 <SignUpButton active onClick={this.handleSignUp}>Sign up</SignUpButton> :
@@ -253,7 +254,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         actions: bindActionCreators({
-            signUpRequest
+            getUser, signUpRequest
         }, dispatch)
     }
 }

@@ -56,14 +56,12 @@ class Category extends Component {
         }
     }
 
-    componentWillMount(){
-        console.log('Category')
+    componentWillMount(){        
         subRolesForSave = {}        
     }
 
     addTag = (text) => {        
-        let temp = this.state.tags.slice()
-        console.log('temp', temp)
+        let temp = this.state.tags.slice()        
         temp.push(text)
         this.setState({ tags: temp })
     }
@@ -138,7 +136,7 @@ class Category extends Component {
             Technologies: this.state.tags
         }
         this.setState({ isLoading: true })
-        this.props.actions.getSubRolesAndTechs(roles, subRolesForSave, this.state.tags)
+        this.props.actions.getSubRolesAndTechs(roles, subRolesForSave, subRoles, this.state.tags)
         this.props.actions.postSignup2Data('Signup2', obj)
             .then(() => {
                 setTimeout(() => {
@@ -157,7 +155,7 @@ class Category extends Component {
         return (
             <Wrapper>   
                 <Form 
-                    defaultValues={this.props.subRoles}
+                    defaultValues={this.props.subRoles1}
                     onSubmit={(values => {                        
                         this.getSubRoles(values)
                     })}
@@ -287,9 +285,8 @@ class Category extends Component {
 
 // Map state to props
 const mapStateToProps = (state) => {
-    return {
-        // profileID: state.auth.profileID,
-        subRoles: state.talent.subRoles,
+    return {        
+        subRoles1: state.talent.subRoles1,
         techs: state.talent.techs
     }
 }

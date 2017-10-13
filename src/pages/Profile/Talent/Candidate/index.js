@@ -47,8 +47,7 @@ class TagList extends Component {
         this.setState({ tags: temp })
     }   
 
-    render() {
-        console.log('edit1', this.props.editable)
+    render() {        
         return (
             <Tags data={ this.state.tags } editable={this.props.editable} removeTag={(index) => this.removeTag(index)} addTag={ (text) => this.addTag(text) } />
         )
@@ -60,10 +59,10 @@ class Candidate extends Component {
         super(props)
         this.state = {
             percentage: 65,
-            switched: this.props.status === 2,
-            opportunities: ["Frontend Engineer", "Backend Engineer"],
-            skills: this.props.techs,
-            locations: ["Copenhagen", "Stockholm"],
+            switched: this.props.talent.status === 2,
+            opportunities: this.props.talent.subRoles2,
+            skills: this.props.talent.techs,
+            locations: this.props.talent.locations,
             value : {
                 start: 30,
                 end: 80
@@ -87,9 +86,28 @@ class Candidate extends Component {
         browserHistory.push(path)
     }
 
+    getPercentage = (opp, skills, locations, social) => {
+        let percentage = 0
+        if(opp.length !== 0){
+            percentage = percentage + 25
+        }
+        if(skills.length !== 0){
+            percentage = percentage + 25
+        }
+        if(locations.length !== 0){
+            percentage = percentage + 25
+        }
+        if(social.length !== 0){
+            percentage = percentage + 25
+        }
+        return percentage
+    }
+
     render() {        
-        const { percentage, opportunities, skills, locations, value } = this.state       
-        const { isEditable } = this.props       
+        const { opportunities, skills, locations, value } = this.state       
+        const { isEditable } = this.props  
+        let fullName = this.props.user.firstName + ' ' + this.props.user.lastName 
+        let percentage = this.getPercentage(opportunities, skills, locations, this.props.talent.social)              
         return (
             <Wrapper>
                 <Header edit/>
@@ -97,8 +115,10 @@ class Candidate extends Component {
                 <UserWrapper>
                     <Avatar src={Images.user} alt="user" />
                     <User>
-                        <h1>Christian Henriksen</h1>
-                        <p>{this.props.roles[0]}</p>                        
+                        <h1>{fullName}</h1>
+                        { this.props.talent.roles &&
+                            <p>{this.props.talent.roles[0]}</p>                                     
+                        }                        
                         <ToggleWrapper>
                             <p>Active</p>                            
                                 <Switch onClick={this.toggleSwitch} on={this.state.switched}/>                            
@@ -125,7 +145,7 @@ class Candidate extends Component {
                                 <p>Skype</p>    
                             </div>
                             <div>
-                                <p>christian.henriksen@gmail.com</p>
+                                <p>{this.props.user.email}</p>
                                 <p>+45 66778899</p>
                                 <p>codewizard_dk</p>    
                             </div>
@@ -133,19 +153,27 @@ class Candidate extends Component {
                     </Detail>
                 </DetailWrapper>                
                 <FieldWrapper>
-                    <h1>Social media</h1>
+                    <h1>Social media</h1>  
                     <div>
-                        <div>
-                            <img src={Images.github} alt="git" />
-                            <img src={Images.linkedin} alt="linkedin" />
-                            <img src={Images.facebook} alt="facebook" />                            
-                        </div>
-                        <div>
-                            <p>github.com/christianhenriksen</p>
-                            <p>linkedin.com/in/christianhenriksen</p>
-                            <p>facebook.com/christianhenriksen</p>
-                        </div>
-                    </div>                                                        
+                        <div>                  
+                        { this.props.talent.social && this.props.talent.social.map((social, index) => {
+                            if(social.indexOf('github.com') !== -1){
+                                return <img key={index} src={Images.github} alt="git" />
+                            } 
+                            if(social.indexOf('linkedin.com') !== -1){
+                                return <img key={index} src={Images.linkedin} alt="linkedin" />
+                            }
+                            if(social.indexOf('facebook.com') !== -1){
+                                return <img key={index} src={Images.facebook} alt="facebook" />
+                            }                                                               
+                        })} 
+                        </div>    
+                        <div>                  
+                        { this.props.talent.social && this.props.talent.social.map((social, index) => {                            
+                            return <p key={index}>{social.split('https://')[1]}</p>                                                                                   
+                        })} 
+                        </div>  
+                    </div>                                                                                          
                 </FieldWrapper>                
                 <TagWrapper>
                     <h1>Opportunities I'm interested in</h1>
@@ -198,11 +226,8 @@ class Candidate extends Component {
 // Map state to props
 const mapStateToProps = (state) => {
     return {  
+        user: state.auth,
         isEditable: state.auth.isEditable,  
-        roles: state.talent.roles,    
-        subRoles: state.talent.subRoles,
-        techs: state.talent.techs,  
-        status: state.talent.status,
         talent: state.talent     
     }
 }

@@ -43,8 +43,7 @@ class Tags extends Component {
     }
 
     render() {          
-        const { data, editable } = this.props      
-        console.log('edit', editable)  
+        const { data, editable } = this.props               
         return (
             <Wrapper>                
                 { data && data.map((name, index) => {
