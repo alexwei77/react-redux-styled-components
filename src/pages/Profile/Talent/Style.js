@@ -75,10 +75,7 @@ export const Button = styled.a`
         font-size: 15px;
         align-items: center;
         display: flex;
-        // height: 35px;
         justify-content: center;
-        // padding: 10px 60px;
-        // width: calc(100% * (1/10) - 10px - 1px);
     }
     img {
         width: 15px;
@@ -108,10 +105,8 @@ export const RadioButton = styled.label`
         font-size: 15px;
         align-items: center;
         display: flex;
-        // height: 35px;
         justify-content: center;
-        // padding: 10px 60px;
-        // width: calc(100% * (1/10) - 10px - 1px);
+
     }
 `
 export const Input = styled.div`    
@@ -305,19 +300,24 @@ export const IconWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 30px 0 0 0;
-    
-    img {
-        margin: 0 10px;
-        width: 80px !important;
-        @media(max-width:767px){
-            width: 65px !important;
-            margin: 0 1vw;
-        }
-        @media(max-width:392px){
-            width: 16.5vw !important;
-            margin: 0;
-        }
+    margin: 30px 0 0 0;    
+`
+export const SocialImg = styled.img`
+    opacity: 0.6;
+    ${props =>props.git? 'opacity:1;':''}
+    ${props =>props.google? 'opacity:1;':''}
+    ${props =>props.facebook? 'opacity:1;':''}
+    ${props =>props.linkedin? 'opacity:1;':''}
+    ${props =>props.behance? 'opacity:1;':''}
+    margin: 0 10px;
+    width: 80px !important;
+    @media(max-width:767px){
+        width: 65px !important;
+        margin: 0 1vw;
+    }
+    @media(max-width:392px){
+        width: 16.5vw !important;
+        margin: 0;
     }
 `
 export const FormWrapper = styled.div`
@@ -362,11 +362,9 @@ export const FormButton = styled.label`
     @media(max-width:767px){
         font-size: 15px;
         align-items: center;
-        display: flex;
-        // height: 35px;
+        display: flex;        
         justify-content: center;
-        padding: 10px 30px;
-        // width: calc(100% * (1/10) - 10px - 1px);
+        padding: 10px 30px;        
     }
     img {
         width: 15px;

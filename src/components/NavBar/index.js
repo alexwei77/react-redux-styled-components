@@ -50,8 +50,7 @@ class Navigation extends Component {
     } 
     
     toggleEdit = () => {
-        let isEditable = this.state.isEditable ? false : true
-        console.log('afdsf', isEditable, this.state.isEditable)
+        let isEditable = this.state.isEditable ? false : true        
         this.props.actions.getEditState(isEditable);
         this.setState({
             isEditable: isEditable

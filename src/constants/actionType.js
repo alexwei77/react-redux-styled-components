@@ -12,6 +12,8 @@ export const SIGNUP_TYPE = 'SIGNUP_TYPE'
 /* TALENT */
 export const GET_ROLES_TECH = "GET_ROLES_TECH"
 export const GET_SUBMITION_DATA = "GET_SUBMITION_DATA"
+export const UPDATE_STATUS = "UPDATE_STATUS"
+export const UPDATE_CATEGORY = "UPDATE_CATEGORY"
 
 /* USER */
 export const GET_USER = "GET_USER"

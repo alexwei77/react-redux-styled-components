@@ -33,8 +33,7 @@ class Tags extends Component {
         }
     } 
 
-    showHideTagInput = () => {
-        console.log('addtag')
+    showHideTagInput = () => {        
         this.setState({ addtag: !this.state.addtag })
     }
 

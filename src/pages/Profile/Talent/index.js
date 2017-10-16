@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 class TalentPage extends Component {
 
     componentWillMount(){        
-        if((window.localStorage.getItem('profileId')).length === 0){
+        if(window.localStorage.getItem('profileId') === null){
            this.props.type === 'talent' ? browserHistory.push('/signup/talent') : browserHistory.push('signup/employer') 
         }
     }

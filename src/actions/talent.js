@@ -1,12 +1,11 @@
 import * as Types from '../constants/actionType'
 import { request } from '../services/request'
 
-export const getSubRolesAndTechs = (roles, subRoles1, subRoles2, techs) => {
+export const getSubRolesAndTechs = (roles, subRoles, techs) => {
     return {
         type: Types.GET_ROLES_TECH,
         roles,
-        subRoles1,
-        subRoles2,
+        subRoles,
         techs,
     }
 }
@@ -18,6 +17,21 @@ export const getSubmitionData = (locations, beverage, social, status) => {
         beverage,
         social,
         status
+    }
+}
+
+export const updateStatus = (status) => {
+    return {
+        type: Types.UPDATE_STATUS,
+        status
+    }
+}
+
+export const updateCategory = (key, data) => {    
+    return {
+        type: Types.UPDATE_CATEGORY,
+        key,
+        data
     }
 }
 

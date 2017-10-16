@@ -27,7 +27,8 @@ import {
     TextFieldWrapper,
     FlexWrapper,
     AddButton,
-    IconWrapper } from './Style'
+    IconWrapper,
+    SocialImg } from './Style'
 import { getSubmitionData, postSubmitionData } from '../../../actions/talent'
 import * as Validate from '../../../constants/validate'
 
@@ -47,11 +48,33 @@ class Submition extends Component {
             locations: this.props.locations,
             beverage: this.props.beverage,
             status: this.props.status,
-            urls: [],
+            urls: this.props.social,
             url: '',
             isValidate: false,
-            isLoading: false
+            isLoading: false,      
+            google: false,
+            facebook: false,
+            linkedin: false,
+            behance: false,
+            git: false       
         }
+    }
+    componentWillMount() {
+        let socialType        
+        if(this.props.social.length !==0){
+            this.props.social.map(url => {
+                if(url.indexOf('github') !== -1) socialType = 'git'
+                if(url.indexOf('google') !== -1) socialType = 'google'
+                if(url.indexOf('facebook') !== -1) socialType = 'facebook'
+                if(url.indexOf('linkedin') !== -1) socialType = 'linkedin'
+                if(url.indexOf('behance') !== -1) socialType = 'behance'                
+                this.setState({
+                    [socialType]: true
+                })
+                return socialType
+            })         
+                
+        }        
     }
 
     addLocation = (text) => {        
@@ -85,19 +108,33 @@ class Submition extends Component {
         }
     }
 
-    getUrl = (e) => {        
+    getUrl = (e) => {      
+        const { value } = e.target          
         this.setState({
-            isValidate: Validate.socialValidate(e.target.value),
-            url: e.target.value
+            isValidate: Validate.socialValidate(value),
+            url: value
         })
     }
 
     addUrl = () => {
-        let temp = this.state.urls.slice()
-        temp.push(this.state.url)
+        let socialType
+        const { url, urls } = this.state
+        let temp = urls.slice()
+        temp.push(url)
+        temp.map(url => {
+            if(url.indexOf('github') !== -1) socialType = 'git'
+            if(url.indexOf('google') !== -1) socialType = 'google'
+            if(url.indexOf('facebook') !== -1) socialType = 'facebook'
+            if(url.indexOf('linkedin') !== -1) socialType = 'linkedin'
+            if(url.indexOf('behance') !== -1) socialType = 'behance'
+            this.setState({
+                [socialType]: true
+            })
+            return socialType
+        })         
         this.setState({
             urls: temp,
-            isValidate: false
+            isValidate: false,            
         })        
         this.urlInput.input.value = 'https://'
         this.urlInput.focus()
@@ -170,14 +207,14 @@ class Submition extends Component {
                         </ButtonWrapper>
                     </FieldWrapper>
                     <FieldWrapper>
-                        <SubHeading>Please help us understand your profile</SubHeading> 
+                        <SubHeading>Please help us understand your profile</SubHeading>                                                                                     
                         <IconWrapper>
-                            <img src={Images.github} alt="github" />
-                            <img src={Images.google1} alt="google" /> 
-                            <img src={Images.facebook} alt="facebook" />
-                            <img src={Images.linkedin} alt="linkedin" />
-                            <img src={Images.behance} alt="behance" />                                                                                  
-                        </IconWrapper>
+                            { this.state.git ? <SocialImg git src={Images.github} alt="github" /> : <SocialImg src={Images.github} alt="github" />}
+                            { this.state.google ? <SocialImg google src={Images.google1} alt="google" /> : <SocialImg src={Images.google1} alt="google" />}
+                            { this.state.facebook ? <SocialImg facebook src={Images.facebook} alt="facebook" /> : <SocialImg src={Images.facebook} alt="facebook" />}
+                            { this.state.linkedin ? <SocialImg linkedin src={Images.linkedin} alt="linkedin" /> : <SocialImg src={Images.linkedin} alt="linkedin" />}
+                            { this.state.behance ? <SocialImg behance src={Images.behance} alt="behance" /> : <SocialImg src={Images.behance} alt="behance" />}
+                        </IconWrapper>                                                                                                         
                         <FlexWrapper>
                             <TextFieldWrapper>    
                                 <Input add>

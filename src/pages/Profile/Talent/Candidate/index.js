@@ -4,11 +4,13 @@ import "../../../../../node_modules/react-toggle-switch/dist/css/switch.min.css"
 import { RangeSlider } from 'reactrangeslider'
 import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import CircularProgressbar from '../../../../components/CircularProgressbar'
 import Header from '../../../../components/Header'
 import Footer from '../../../../components/Footer'
 import Tags from '../../../../components/Tags'
+import { updateStatus, updateCategory } from '../../../../actions/talent'
 import { 
     Wrapper,
     Heading,
@@ -38,16 +40,18 @@ class TagList extends Component {
     addTag = (text) => {
         let temp = this.state.tags.slice()
         temp.push(text)
-        this.setState({ tags: temp })
+        this.setState({ tags: temp })        
+        this.props.update(this.props.type, temp)
     }
 
     removeTag = (index) => {
         let temp = this.state.tags.slice()
-        temp.splice(index, 1)
+        temp.splice(index, 1)        
         this.setState({ tags: temp })
+        this.props.update(this.props.type, temp)
     }   
 
-    render() {        
+    render() {                
         return (
             <Tags data={ this.state.tags } editable={this.props.editable} removeTag={(index) => this.removeTag(index)} addTag={ (text) => this.addTag(text) } />
         )
@@ -60,7 +64,7 @@ class Candidate extends Component {
         this.state = {
             percentage: 65,
             switched: this.props.talent.status === 2,
-            opportunities: this.props.talent.subRoles2,
+            opportunities: this.props.talent.subRoles,
             skills: this.props.talent.techs,
             locations: this.props.talent.locations,
             value : {
@@ -70,7 +74,23 @@ class Candidate extends Component {
         }
     }
 
-    toggleSwitch = () => {
+    componentWillReceiveProps(nextProps) {
+        const { subRoles, techs, locations } = nextProps.talent
+        this.setState({
+            opportunities: subRoles,
+            skills: techs,
+            locations: locations
+        })
+    }
+
+    toggleSwitch = () => {        
+        let status        
+        if(this.props.talent.status !== 2){
+            status = 2
+        } else {
+            status = 1
+        }        
+        this.props.actions.updateStatus(status)        
         this.setState(prevState => {
             return {
                 switched: !prevState.switched
@@ -103,7 +123,7 @@ class Candidate extends Component {
         return percentage
     }
 
-    render() {        
+    render() {                
         const { opportunities, skills, locations, value } = this.state       
         const { isEditable } = this.props  
         let fullName = this.props.user.firstName + ' ' + this.props.user.lastName 
@@ -157,15 +177,17 @@ class Candidate extends Component {
                     <div>
                         <div>                  
                         { this.props.talent.social && this.props.talent.social.map((social, index) => {
+                            let socialUrl
                             if(social.indexOf('github.com') !== -1){
-                                return <img key={index} src={Images.github} alt="git" />
+                                socialUrl = <img key={index} src={Images.github} alt="git" />
                             } 
-                            if(social.indexOf('linkedin.com') !== -1){
-                                return <img key={index} src={Images.linkedin} alt="linkedin" />
+                            else if(social.indexOf('linkedin.com') !== -1){
+                                socialUrl = <img key={index} src={Images.linkedin} alt="linkedin" />
                             }
-                            if(social.indexOf('facebook.com') !== -1){
-                                return <img key={index} src={Images.facebook} alt="facebook" />
-                            }                                                               
+                            else if(social.indexOf('facebook.com') !== -1){
+                                socialUrl = <img key={index} src={Images.facebook} alt="facebook" />
+                            } 
+                            return socialUrl                                                              
                         })} 
                         </div>    
                         <div>                  
@@ -178,20 +200,19 @@ class Candidate extends Component {
                 <TagWrapper>
                     <h1>Opportunities I'm interested in</h1>
                     { opportunities && isEditable ?
-                        <TagList editable={isEditable} data={opportunities} /> : <TagList data={opportunities} />
+                        <TagList type="role" editable={isEditable} data={opportunities} update={this.props.actions.updateCategory}/> : <TagList data={opportunities} />
                     }                    
                 </TagWrapper>
                 <TagWrapper>
                     <h1>My Skills</h1>
                     { skills && isEditable ?
-                        <TagList editable={isEditable} data={skills} /> : <TagList data={skills} />
-                    }
-                    
+                        <TagList type="tech" editable={isEditable} data={skills} update={this.props.actions.updateCategory}/> : <TagList data={skills} />
+                    }                    
                 </TagWrapper>
                 <TagWrapper>
                     <h1>Locations I'm interested in</h1>
                     { locations && isEditable ?
-                        <TagList editable={isEditable} data={locations} /> : <TagList data={locations} />
+                        <TagList type="location" editable={isEditable} data={locations} update={this.props.actions.updateCategory}/> : <TagList data={locations} />
                     }                    
                 </TagWrapper>
                 <Slider>
@@ -232,4 +253,14 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(Candidate)
+// Map action to props
+const mapDispatchToProps = (dispatch) => {
+    return {
+        actions: bindActionCreators({
+            updateStatus,
+            updateCategory
+        }, dispatch)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Candidate)

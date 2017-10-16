@@ -6,8 +6,7 @@ export function signUpRequest(step, userInfo){
         return new Promise((resolve, reject) => {
             request(step, userInfo)
                 .then(response => {                    
-                    window.localStorage.setItem('profileId', response)
-                    console.log('auth res', response, window.localStorage)
+                    window.localStorage.setItem('profileId', response)                    
                     dispatch({
                         type: Types.SIGNUP_SUCCESS,
                         data: response

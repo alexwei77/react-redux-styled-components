@@ -39,12 +39,13 @@ const styles = {
     }
 }
 
-let subRolesForSave
+// let subRolesForSave
 
 class Category extends Component {
     constructor(props){
         super(props)        
-        this.state = {                              
+        this.state = {     
+            initSubRole: {},                         
             tags: this.props.techs,
             engineering: "Backend Engineer, Frontend Engineer, Fullstack Engineer, Mobile, DevOps and Tooling, QA",
             sales: "Sales Representative, Account Executive, Sales Manager, Sales Director",
@@ -57,7 +58,18 @@ class Category extends Component {
     }
 
     componentWillMount(){        
-        subRolesForSave = {}        
+        // subRolesForSave = {}
+        let temp = {}   
+        if(this.props.subRoles){
+            this.props.subRoles.map(subRole => {                 
+                let tempSubRole
+                subRole === 'UI/UX Designer' ? tempSubRole = (subRole.substring(3, 14)).replace(" ", '_') : tempSubRole = subRole.replace(" ", '_')          
+                return temp[tempSubRole] = true
+            })
+        }        
+        this.setState({
+            initSubRole: temp
+        })
     }
 
     addTag = (text) => {        
@@ -136,7 +148,7 @@ class Category extends Component {
             Technologies: this.state.tags
         }
         this.setState({ isLoading: true })
-        this.props.actions.getSubRolesAndTechs(roles, subRolesForSave, subRoles, this.state.tags)
+        this.props.actions.getSubRolesAndTechs(roles, subRoles, this.state.tags)
         this.props.actions.postSignup2Data('Signup2', obj)
             .then(() => {
                 setTimeout(() => {
@@ -151,17 +163,17 @@ class Category extends Component {
     }
 
     render() {
-        const { tags, isLoading } = this.state
+        const { initSubRole, tags, isLoading } = this.state        
         return (
             <Wrapper>   
                 <Form 
-                    defaultValues={this.props.subRoles1}
+                    defaultValues={initSubRole}
                     onSubmit={(values => {                        
                         this.getSubRoles(values)
                     })}
                 >
                     { ({ submitForm, values }) => {                          
-                        subRolesForSave = values
+                        // subRolesForSave = values                        
                         return (
                             <form onSubmit={submitForm}>
                             <Header visible percent={2} save/>                
@@ -286,7 +298,7 @@ class Category extends Component {
 // Map state to props
 const mapStateToProps = (state) => {
     return {        
-        subRoles1: state.talent.subRoles1,
+        subRoles: state.talent.subRoles,
         techs: state.talent.techs
     }
 }

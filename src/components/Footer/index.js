@@ -15,7 +15,7 @@ class Footer extends React.Component {
         browserHistory.push(path);
     }
 
-    render() {
+    render() {        
         return (
             <Container>
                 <Logo src={Images.logo_footer} alt="footer" />

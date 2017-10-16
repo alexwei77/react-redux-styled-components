@@ -9,8 +9,7 @@ export const Container = styled.footer`
     max-width: 800px;    
     text-align: center;
     height: 570px;
-    justify-content: center;
-    filter: grayscale(0);
+    justify-content: center;    
 
     @media(min-width: 768px) {
         height: 550px;
