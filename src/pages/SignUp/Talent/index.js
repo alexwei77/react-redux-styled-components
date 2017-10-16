@@ -120,10 +120,11 @@ class SignUp extends Component {
 
     handleSignUp = () => {                       
         const { isFullName, isEmail, isLocation } = this.state
-        this.setState({ isValidate: true, isLoading: true })
+        this.setState({ isValidate: true })
         if(!isFullName || !isEmail || !isLocation ){
             return
         }
+        this.setState({ isLoading: true })
         const obj = {
             Email: this.state.email,
             FirstName: this.state.fullname.split(' ')[0],

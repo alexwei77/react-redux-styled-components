@@ -159,7 +159,7 @@ export const Form = styled.div`
     align-items: center;
 
     div {
-        width: 815px !important;
+        width: 820px !important;
         font-size: 23px !important;
         font-family: 'NudistaLight' !important;
     }
@@ -172,7 +172,7 @@ export const Form = styled.div`
     }
     @media(max-width: 1023px){
         div {
-            width: 700px !important;
+            width: 705px !important;
         }
     }
     @media(max-width: 767px){
