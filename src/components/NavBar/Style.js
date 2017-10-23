@@ -45,6 +45,9 @@ export const EditButton = styled.a`
     padding: 10px 30px;
     background-color: transparent;
     margin-right: 12px;
+    @media(max-width:572px){
+        margin-right: 0;
+    }
     @media(max-width:462px){
         padding: 7px 20px;
     }
@@ -79,7 +82,7 @@ export const Menu = styled.div`
     }
 `
 export const Img = styled.img`
-    z-index: 3;
+    z-index: 6;
     margin-right: 15px;
     &:hover {
         cursor: pointer;
@@ -99,7 +102,7 @@ export const Nav = styled.ul`
     position: absolute;
     right: 0;
     top: 0;
-    z-index: 2;
+    z-index: 5;
 
     &.active {
         display: flex;
@@ -130,6 +133,7 @@ export const LoginButton = styled.div`
     background-size: cover;
     width: 18px;
     height: 25px;
+    display: block !important;
     &:hover {
         margin-left: 1px;
         cursor: pointer;
@@ -140,11 +144,11 @@ export const Container = styled.div`
     border-radius: 50px;
     height: 38px;
     width: 38px;
-    z-index: 3;
+    z-index: 6;
     display: flex;
     justify-content: center;
     align-items: center;
-
+    
     &:hover {
         border: none;
         margin-left: 2px;
@@ -154,12 +158,13 @@ export const Container = styled.div`
             height: 51px;
             background-size: cover;
             margin-left: -9px;
+            display: block !important;
         }
     }  
     @media(max-width:992px){
-        ${props =>props.save? 'display:none':''}      
+        ${props =>props.save? 'display:none;':''}      
     }  
     @media(max-width:572px){
-        ${props =>props.edit? 'display:none':''}
+        ${props =>props.edit? 'display:none;':''}
     }
 `

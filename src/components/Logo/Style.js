@@ -3,9 +3,9 @@ import styled from 'styled-components'
 export const Heading = styled.a`
     
     padding: 50px 0;
-    @media(max-width:892px){
-        margin-right: auto;
-    }   
+    // @media(max-width:892px){
+    //     margin-right: auto;
+    // }   
     @media(max-width:592px){
         margin-left: -20px;
     }   

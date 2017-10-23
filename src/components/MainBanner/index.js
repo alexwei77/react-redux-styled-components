@@ -16,7 +16,8 @@ class MainBanner extends React.Component {
     
     pageNavigation = () => {  
         if(this.props.type === 'talent'){
-            window.localStorage.getItem('profileId') ? browserHistory.push('/profile/talent') : browserHistory.push('/signup/talent')
+            // this.props.isLoggedIn ? browserHistory.push('/profile/talent') : browserHistory.push('/signup/talent')
+            browserHistory.push('/signup/talent')
         } else {
             browserHistory.push('/signup/employer')
         }
@@ -48,7 +49,8 @@ class MainBanner extends React.Component {
 // Map state to props
 const mapStateToProps = (state) => {
     return {
-        type: state.auth.type
+        type: state.auth.type,
+        isLoggedIn: state.auth.isLoggedIn
     }
 }
 

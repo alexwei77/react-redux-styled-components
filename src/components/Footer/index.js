@@ -1,5 +1,6 @@
 import React from 'react'
 import { browserHistory } from 'react-router'
+import $ from 'jquery'
 import { 
     Container, 
     Logo, 
@@ -13,6 +14,9 @@ class Footer extends React.Component {
 
     gotoPage = (path) => {
         browserHistory.push(path);
+        $('body,html').animate({
+            scrollTop: 0,
+        }, 1000);
     }
 
     render() {        

@@ -63,10 +63,10 @@ class Candidate extends Component {
         super(props)
         this.state = {
             percentage: 65,
-            switched: this.props.talent.status === 2,
-            opportunities: this.props.talent.subRoles,
-            skills: this.props.talent.techs,
-            locations: this.props.talent.locations,
+            switched: this.props.status === 2,
+            opportunities: this.props.subRoles,
+            skills: this.props.techs,
+            locations: this.props.locations,
             value : {
                 start: 30,
                 end: 80
@@ -75,7 +75,7 @@ class Candidate extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const { subRoles, techs, locations } = nextProps.talent
+        const { subRoles, techs, locations } = nextProps
         this.setState({
             opportunities: subRoles,
             skills: techs,
@@ -85,7 +85,7 @@ class Candidate extends Component {
 
     toggleSwitch = () => {        
         let status        
-        if(this.props.talent.status !== 2){
+        if(this.props.status !== 2){
             status = 2
         } else {
             status = 1
@@ -106,7 +106,7 @@ class Candidate extends Component {
         browserHistory.push(path)
     }
 
-    getPercentage = (opp, skills, locations, social) => {
+    getPercentage = (opp, skills, locations, social) => {        
         let percentage = 0
         if(opp.length !== 0){
             percentage = percentage + 25
@@ -124,10 +124,10 @@ class Candidate extends Component {
     }
 
     render() {                
-        const { opportunities, skills, locations, value } = this.state       
+        const { opportunities, skills, locations, value } = this.state            
         const { isEditable } = this.props  
         let fullName = this.props.user.firstName + ' ' + this.props.user.lastName 
-        let percentage = this.getPercentage(opportunities, skills, locations, this.props.talent.social)              
+        let percentage = this.getPercentage(opportunities, skills, locations, this.props.social)              
         return (
             <Wrapper>
                 <Header edit/>
@@ -136,8 +136,8 @@ class Candidate extends Component {
                     <Avatar src={Images.user} alt="user" />
                     <User>
                         <h1>{fullName}</h1>
-                        { this.props.talent.roles &&
-                            <p>{this.props.talent.roles[0]}</p>                                     
+                        { this.props.roles &&
+                            <p>{this.props.roles[0]}</p>                                     
                         }                        
                         <ToggleWrapper>
                             <p>Active</p>                            
@@ -176,7 +176,7 @@ class Candidate extends Component {
                     <h1>Social media</h1>  
                     <div>
                         <div>                  
-                        { this.props.talent.social && this.props.talent.social.map((social, index) => {
+                        { this.props.social && this.props.social.map((social, index) => {
                             let socialUrl
                             if(social.indexOf('github.com') !== -1){
                                 socialUrl = <img key={index} src={Images.github} alt="git" />
@@ -187,11 +187,17 @@ class Candidate extends Component {
                             else if(social.indexOf('facebook.com') !== -1){
                                 socialUrl = <img key={index} src={Images.facebook} alt="facebook" />
                             } 
+                            else if(social.indexOf('google.com') !== -1){
+                                socialUrl = <img key={index} src={Images.google1} alt="google" />
+                            } 
+                            else if(social.indexOf('behance.com') !== -1){
+                                socialUrl = <img key={index} src={Images.behance} alt="behance" />
+                            } 
                             return socialUrl                                                              
                         })} 
                         </div>    
                         <div>                  
-                        { this.props.talent.social && this.props.talent.social.map((social, index) => {                            
+                        { this.props.social && this.props.social.map((social, index) => {                            
                             return <p key={index}>{social.split('https://')[1]}</p>                                                                                   
                         })} 
                         </div>  
@@ -246,10 +252,16 @@ class Candidate extends Component {
 
 // Map state to props
 const mapStateToProps = (state) => {
+    const { roles, subRoles, locations, status, social, techs } = state.talent
     return {  
         user: state.auth,
         isEditable: state.auth.isEditable,  
-        talent: state.talent     
+        roles,
+        subRoles,
+        locations,
+        status,
+        social,
+        techs    
     }
 }
 

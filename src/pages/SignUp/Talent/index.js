@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { browserHistory } from 'react-router'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import TextField from 'material-ui/TextField'
-import GoogleLogin from 'react-google-login'
-import FacebookLogin from 'react-facebook-login'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux' 
 import ReactLoading from 'react-loading'
@@ -15,8 +13,7 @@ import {
     Heading, 
     ButtonWrapper,
     SpinWrapper, 
-    GoogleButton, 
-    FacebookButton, 
+    SocialButton, 
     CircleButton, 
     Text, 
     Form, 
@@ -24,7 +21,7 @@ import {
     Img, 
     SignUpButton } from './Style'
 import Images from '../../../themes/images'
-import { request } from '../../../services/request'
+import firebase from '../../../services/firebase'
 import { signUpRequest, getUser } from '../../../actions/auth'
 import * as Validate from '../../../constants/validate'
 
@@ -63,44 +60,10 @@ class SignUp extends Component {
         }
     }
 
-    responseGoogle(response) {
-        console.log('google-response', response) 
-        const profile = response.profileObj
-        const name = profile.name.split(" ")
-        const obj = {
-            Email: profile.email,  
-            FirstName: name[0],
-            LastName: name[1], 
-            Location: null                     
-            // picture: profile.imageUrl
-        }        
-        request('Signup1', obj)
-            .then(response => {
-                window.localStorage.setItem('profileId', response)
-                browserHistory.push('/profile/talent')
-            }).catch(() => {
-                // TODO: any processing
-            })  
-    }
-
-    responseFacebook(response) { 
-        console.log('facebook-response', response)       
-        const name = response.name.split(" ")
-        const obj = {
-            Email: response.email,
-            FirstName: name[0],
-            LastName: name[1],       
-            Location: null     
-            // accessToken: response.accessToken,
-            // picture: response.picture.data.url
-        }         
-        request('Signup1', obj)
-            .then(response => {
-                window.localStorage.setItem('profileId', response)
-                browserHistory.push('/profile/talent')
-            }).catch(() => {
-                // TODO: any processing
-            })  
+    componentWillMount() {
+        // if(this.props.isLoggedIn){
+        //     browserHistory.push('/profile/talent')
+        // }
     }
 
     getValue = (e) => {
@@ -118,6 +81,39 @@ class SignUp extends Component {
         e.preventDefault()
     }
 
+    handleSocialLogin = (social) => {        
+        const provider = (social === 'google' ? new firebase.auth.GoogleAuthProvider() : new firebase.auth.FacebookAuthProvider())        
+        firebase.auth().signInWithPopup(provider)
+        .then(result => {
+            const user = result.user;  
+            const obj = {
+                Email: user.email,
+                FirstName: user.displayName.split(' ')[0],
+                LastName: user.displayName.split(' ')[1],
+                Location: null
+            }                          
+            this.props.actions.getUser(obj.FirstName, obj.LastName, obj.Email)
+            // this.props.actions.signUpRequest('Signup1', obj)
+            // .then(() => {                                
+                browserHistory.push('/profile/talent')                 
+            // })
+            // .catch(() => {
+                // TODO: any processing
+            // }) 
+        }, error => {
+            const email = error.email;                
+            const credential = error.credential;
+            console.log('error', email, credential)
+            alert('Login Failed! Please try again.')
+            if (error.code === 'auth/account-exists-with-different-credential') {
+                firebase.auth().fetchProvidersForEmail(email)
+                .then(providers => {
+                    // TODO: any processing
+                });
+            }
+        });
+    }
+
     handleSignUp = () => {                       
         const { isFullName, isEmail, isLocation } = this.state
         this.setState({ isValidate: true })
@@ -130,17 +126,17 @@ class SignUp extends Component {
             FirstName: this.state.fullname.split(' ')[0],
             LastName: this.state.fullname.split(' ')[1],
             Location: this.state.location
-        }
-        this.props.actions.getUser(obj.FirstName, obj.LastName, obj.Email)
-        this.props.actions.signUpRequest('Signup1', obj)
-            .then(() => {                
+        }        
+        // this.props.actions.signUpRequest('Signup1', obj)
+            // .then(() => {               
+                this.props.actions.getUser(obj.FirstName, obj.LastName, obj.Email) 
                 setTimeout(() => {
                     browserHistory.push('/profile/talent')
-                }, 5000)                    
-            })
-            .catch(() => {
-                this.setState({ isLoading: false })
-            })               
+                }, 3000)                    
+            // })
+            // .catch(() => {
+                // this.setState({ isLoading: false })
+            // })               
     }
 
     render() {
@@ -150,27 +146,15 @@ class SignUp extends Component {
                 <Header visible percent={1}/>                       
                 <Content>
                     <Heading>Sign up now</Heading>
-                    <ButtonWrapper>
-                        <GoogleLogin
-                            clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
-                            onSuccess={this.responseGoogle}
-                            onFailure={this.responseGoogle}
-                        >
-                            <GoogleButton google>
-                                <img src={Images.google} alt="google" />
-                                <p>Sign up with Google</p>
-                            </GoogleButton>
-                        </GoogleLogin>                        
-                        <FacebookButton>
-                            <FacebookLogin
-                                appId="459046371113157"
-                                autoLoad={false}
-                                fields="name,email,picture,location"
-                                callback={this.responseFacebook}
-                                cssClass='test'
-                                textButton="Sign up with Facebook"
-                            />                            
-                        </FacebookButton>
+                    <ButtonWrapper>                        
+                        <SocialButton google onClick={() =>this.handleSocialLogin('google')}>
+                            <img src={Images.google} alt="google" />
+                            <p>Sign up with Google</p>
+                        </SocialButton>
+                        <SocialButton onClick={() =>this.handleSocialLogin('facebook')}>
+                            <img src={Images.facebook1} alt="facebook" />
+                            <p>Sign up with Facebook</p>
+                        </SocialButton>                                                               
                     </ButtonWrapper>
                     <CircleButton>Or</CircleButton>
                     { isValidate && (!isFullName || !isEmail || !isLocation ) ?

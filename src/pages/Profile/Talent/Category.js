@@ -6,6 +6,7 @@ import {Form, Checkbox, Radio, RadioGroup } from 'react-form'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import ReactLoading from 'react-loading'
+import AlertContainer from 'react-alert'
 
 import { getSubRolesAndTechs, postSignup2Data } from '../../../actions/talent'
 import Header from '../../../components/Header'
@@ -93,11 +94,26 @@ class Category extends Component {
     }
 
     pageNavigation = (path) => {
-        if(window.localStorage.getItem('profileId')){
+        if(this.props.isLoggedIn){
             browserHistory.push('/')
         } else {
             browserHistory.push(path)
         }        
+    }
+
+    alertOptions = {
+        offset: 14,
+        position: 'bottom right',
+        theme: 'light',
+        time: 0,
+        transition: 'scale'
+    }
+     
+    showAlert = () => {
+        this.msg.info('Please fill out all fields.', {
+            time: 0,
+            type: 'info',
+        })
     }
 
     getSubRoles = (values) => {
@@ -141,25 +157,26 @@ class Category extends Component {
                 }                
             }
         })
-        const obj = {
-            ProfileId: window.localStorage.getItem('profileId'),
+        const obj = {            
             Roles: roles,
             SubRoles: subRoles,
             Technologies: this.state.tags
         }
         this.setState({ isLoading: true })
-        this.props.actions.getSubRolesAndTechs(roles, subRoles, this.state.tags)
-        this.props.actions.postSignup2Data('Signup2', obj)
-            .then(() => {
+        this.props.actions.getSubRolesAndTechs(obj)
+        
+        obj.ProfileId = this.props.profileId       
+        // this.props.actions.postSignup2Data('Signup2', obj)
+            // .then(() => {
                 setTimeout(() => {
                     browserHistory.push('/profile/talent/submition')
-                }, 3000)                  
-            }).catch(() => {
-                setTimeout(() => {
-                    this.setState({ isLoading: false })
-                    alert("Failed!")                    
-                }, 2000) 
-            })  
+                }, 2000)                  
+            // }).catch(() => {
+                // setTimeout(() => {
+                    // this.setState({ isLoading: false })
+                    // this.showAlert()                   
+                // }, 2000) 
+            // })  
     }
 
     render() {
@@ -181,7 +198,7 @@ class Category extends Component {
                                 <Heading>Help us by answering<br/>a few questions</Heading>                                        
                                 <FieldWrapper>
                                     <SubHeading>Where do you see yourself?</SubHeading>
-                                    <SubHeading small>(Choose up to three)</SubHeading>                                    
+                                    {/* <SubHeading small>(Choose up to three)</SubHeading>                                     */}
                                     <RadioGroup field="role">
                                         <ButtonWrapper>
                                             <RadioButton active={values.role === 'Engineering'}><Radio value="Engineering"/>Engineering</RadioButton>
@@ -282,14 +299,15 @@ class Category extends Component {
                                 { isLoading ? <Navigation><ReactLoading type="spinningBubbles" color="#4cbf69" height='70' width='70' /></Navigation> :
                                     <Navigation>
                                         <PrevButton prev onClick={() => this.pageNavigation('/signup/talent')}><Img src={Images.leftArrow} alt="left" /></PrevButton>
-                                        <NextButton type="submit">Next<Img right src={Images.wRightArrow} alt="right" /></NextButton>                       
+                                        <NextButton type="submit"><a>Next<Img right src={Images.wRightArrow} alt="right" /></a></NextButton>                       
                                     </Navigation>
                                 }
                             </Content>                     
                             </form>
                         )
                     }}
-                </Form>   
+                </Form> 
+                <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
             </Wrapper>
         )
     }
@@ -297,9 +315,12 @@ class Category extends Component {
 
 // Map state to props
 const mapStateToProps = (state) => {
+    const { subRoles, techs } = state.talent
     return {        
-        subRoles: state.talent.subRoles,
-        techs: state.talent.techs
+        subRoles,
+        techs,
+        profileId: state.auth.profileId,
+        isLoggedIn: state.auth.isLoggedIn
     }
 }
 

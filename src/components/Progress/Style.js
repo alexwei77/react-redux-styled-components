@@ -5,16 +5,15 @@ export const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
     ${props =>props.save ? 'margin-left:80px; @media(max-width:992px){margin-left:0;}':''}    
-    @media(max-width:892px){
-        position: absolute;        
-        margin-top: 65px;
+    @media(max-width:892px){                
+        margin-top: -65px;
     }
 `
 export const Fraction = styled.div`
     
     ${props =>props.save ? 'margin: 0 40px 0 -60px;':'margin: 0 40px 0 -10vw;'} 
     @media(max-width:1472px){
-        ${props =>props.save ? ' margin: 0 3vw 0 -5vw;':' margin: 0 3vw 0 -11vw;'}        
+        ${props =>props.save ? ' margin: 0 3vw 0 -5vw;':' margin: 0 3vw 0 -3vw;'}        
     }
     @media(max-width:592px){
         margin: 0 3vw 0 0;

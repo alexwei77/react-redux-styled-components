@@ -5,6 +5,7 @@ import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import ReactLoading from 'react-loading'
+import AlertContainer from 'react-alert'
 
 import Header from '../../../components/Header'
 import TagList from '../../../components/TagList'
@@ -15,7 +16,8 @@ import {
     FieldWrapper, 
     ButtonWrapper,
     Button,
-    Input, 
+    Input,
+    AutoSuggest, 
     Heading, 
     SubHeading, 
     TagWrapper, 
@@ -31,6 +33,7 @@ import {
     SocialImg } from './Style'
 import { getSubmitionData, postSubmitionData } from '../../../actions/talent'
 import * as Validate from '../../../constants/validate'
+import { cities } from '../../../constants/data'
 
 const styles = {
     floatingLabelStyle: {
@@ -45,6 +48,7 @@ class Submition extends Component {
     constructor(props){
         super(props)
         this.state = {
+            location: '',
             locations: this.props.locations,
             beverage: this.props.beverage,
             status: this.props.status,
@@ -56,12 +60,13 @@ class Submition extends Component {
             facebook: false,
             linkedin: false,
             behance: false,
-            git: false       
+            git: false,
+            isHighlight: false      
         }
     }
     componentWillMount() {
         let socialType        
-        if(this.props.social.length !==0){
+        if(this.props.social){
             this.props.social.map(url => {
                 if(url.indexOf('github') !== -1) socialType = 'git'
                 if(url.indexOf('google') !== -1) socialType = 'google'
@@ -101,10 +106,28 @@ class Submition extends Component {
         })
     }
 
-    getText = (e) => {        
-        if(e.keyCode === 13 && e.target.value) {            
+    getText = (e) => {               
+        const { location } = this.state
+        if(e.target.value.length >= 2){            
+            this.setState({ location: e.target.value })
+        } 
+        if(e.keyCode === 8 && e.target.value.length < 5){
+            console.log('eeee', e.target.value.length)
+            this.setState({ location: '', isHighlight: false })
+        }          
+        if(e.keyCode === 13 && e.target.value) {                        
             this.addLocation(e.target.value)  
+            this.setState({ location: '', isHighlight: false })
             e.target.value = ''              
+        }
+        if(e.keyCode === 40 && location.length >= 3){
+            this.setState({ isHighlight: true })
+            cities.map(city => {
+                if(city.toLowerCase().indexOf(location.toLowerCase()) !== -1){
+                    e.target.value = city
+                }
+                return true
+            })
         }
     }
 
@@ -139,35 +162,53 @@ class Submition extends Component {
         this.urlInput.input.value = 'https://'
         this.urlInput.focus()
     }
+
     prevPageNavigation = (path) => {
         browserHistory.push(path)
     }
 
     nextPageNavigation = (path) => {
-        const data = {
-            ProfileId: window.localStorage.getItem('profileId'),
+        const obj = {            
             Locations: this.state.locations,
             Beverage: this.state.beverage,
             Social: this.state.urls,
             Status: this.state.status
         }
         this.setState({ isLoading: true })
-        this.props.actions.getSubmitionData(data.Locations, data.Beverage, data.Social, data.Status)
-        this.props.actions.postSubmitionData('Signup3', data)
-            .then(() => {                
+        this.props.actions.getSubmitionData(obj)
+
+        obj.ProfileId = this.props.profileId        
+        // this.props.actions.postSubmitionData('Signup3', obj)
+            // .then(() => {                
                 setTimeout(() => {
                     browserHistory.push(path)
-                }, 3000)   
-            }).catch(() => {
-                setTimeout(() => {
-                    this.setState({ isLoading: false })
-                    alert("Failed!")                    
-                }, 2000) 
-            })         
+                },2000)   
+            // }).catch(() => {
+                // setTimeout(() => {
+                    // this.setState({ isLoading: false })
+                    // alert("Failed!")                    
+                // }, 2000) 
+            // })         
+    }
+
+    alertOptions = {
+        offset: 14,
+        position: 'bottom right',
+        theme: 'light',
+        time: 0,
+        transition: 'scale'
+    }
+     
+    showAlert = () => {
+        this.msg.info('Please fill out all fields.', {
+            time: 0,
+            type: 'info',
+        })
     }
 
     render() {        
-        const { locations, beverage, status, isValidate, isLoading } = this.state        
+        const { locations, beverage, status, isValidate, isLoading, location } = this.state             
+        console.log('loc', location)
         return (
             <Wrapper>
                 <Header visible percent={3} save/>
@@ -188,7 +229,16 @@ class Submition extends Component {
                                 />              
                             </MuiThemeProvider>                         
                         </Input>                                            
-                        <UnderLine ></UnderLine>                      
+                        <UnderLine ></UnderLine> 
+                        <AutoSuggest active={this.state.isHighlight}> 
+                        { location.length >= 3 && cities.map((city, index) => {     
+                            let temp                       
+                            if(city.toLowerCase().indexOf(location.toLowerCase()) !== -1 ){
+                                temp = <p key={index}>{ city }</p>
+                            }
+                            return temp
+                        })}         
+                        </AutoSuggest>           
                     </FieldWrapper>
                     <TagWrapper>
                         <TagList data={ locations } removeTag={(index) => this.removeLocation(index)} />
@@ -209,11 +259,11 @@ class Submition extends Component {
                     <FieldWrapper>
                         <SubHeading>Please help us understand your profile</SubHeading>                                                                                     
                         <IconWrapper>
-                            { this.state.git ? <SocialImg git src={Images.github} alt="github" /> : <SocialImg src={Images.github} alt="github" />}
-                            { this.state.google ? <SocialImg google src={Images.google1} alt="google" /> : <SocialImg src={Images.google1} alt="google" />}
-                            { this.state.facebook ? <SocialImg facebook src={Images.facebook} alt="facebook" /> : <SocialImg src={Images.facebook} alt="facebook" />}
-                            { this.state.linkedin ? <SocialImg linkedin src={Images.linkedin} alt="linkedin" /> : <SocialImg src={Images.linkedin} alt="linkedin" />}
-                            { this.state.behance ? <SocialImg behance src={Images.behance} alt="behance" /> : <SocialImg src={Images.behance} alt="behance" />}
+                            <SocialImg git={this.state.git} src={Images.github} alt="github" />
+                            <SocialImg google={this.state.google} src={Images.google1} alt="google" />
+                            <SocialImg facebook={this.state.facebook} src={Images.facebook} alt="facebook" />
+                            <SocialImg linkedin={this.state.linkedin} src={Images.linkedin} alt="linkedin" />
+                            <SocialImg behance={this.state.behance} src={Images.behance} alt="behance" />
                         </IconWrapper>                                                                                                         
                         <FlexWrapper>
                             <TextFieldWrapper>    
@@ -250,6 +300,7 @@ class Submition extends Component {
                         </Navigation>
                     }
                 </Content>
+                <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
             </Wrapper>
         )
     }
@@ -259,7 +310,8 @@ class Submition extends Component {
 const mapStateToProps = (state) => {
     const { locations, beverage, status, social } = state.talent
     return {        
-        locations, beverage, status, social
+        locations, beverage, status, social,
+        profileId: state.auth.profileId
     }
 }
 

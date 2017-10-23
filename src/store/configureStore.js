@@ -4,7 +4,7 @@ import { persistStore, autoRehydrate } from 'redux-persist'
 
 import rootReducer from '../reducers'
 
-const configureStore = (history) => {
+const configureStore = () => {
     const middlewares = [
         thunkMiddleware
     ];

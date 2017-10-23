@@ -17,6 +17,7 @@ import {
     Container } from './Style'
 import Images from '../../themes/images'
 import { getEditState } from '../../actions/auth'
+import { reset } from '../../reducers'
 
 class Navigation extends Component {
     constructor() {
@@ -59,8 +60,21 @@ class Navigation extends Component {
 
     toggleAction = () => {
         if(this.props.type === 'talent'){
-            if(window.localStorage.getItem('profileId')){
-                window.localStorage.removeItem('profileId')                
+            if(this.props.isLoggedIn){                  
+                this.props.actions.reset()   
+                if(this.state.isActive){
+                    this.setState({
+                        isActive: false
+                    })
+                    $("body").css("overflow", "visible")
+                }         
+            } else {
+                if(this.state.isActive){
+                    this.setState({
+                        isActive: false
+                    })
+                    $("body").css("overflow", "visible")
+                }
             }
             browserHistory.push('/signup/talent')
         } else {
@@ -99,7 +113,8 @@ class Navigation extends Component {
 // Map state to props
 const mapStateToProps = (state) => {
     return {
-        type: state.auth.type
+        type: state.auth.type,
+        isLoggedIn: state.auth.isLoggedIn
     }
 }
 
@@ -107,7 +122,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         actions: bindActionCreators({
-            getEditState
+            getEditState, reset
         }, dispatch)
     }
 }

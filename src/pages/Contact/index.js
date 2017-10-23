@@ -36,9 +36,9 @@ class Contact extends Component {
                 <Header />
                 <Heading>Contact</Heading>
                 <Info>
-                    <h1>+45 31 54 70 40</h1>
+                    <h1>Agentify ApS</h1>
                     <p>August Bournonvilles Passage 1<br/>1055 København K</p>                    
-                    <a>info@agnetify.me</a>
+                    <a onClick={() =>window.location.assign('https://hello@agnetify.me')}>hello@agnetify.me</a>
                 </Info>
                 <MapContainer><MapView/></MapContainer>
                 <Form>

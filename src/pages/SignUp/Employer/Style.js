@@ -8,11 +8,12 @@ export const Heading = styled.h1`
     margin: 90px 0;
     text-align: center;
     @media(max-width: 1023px){ font-size: 55px;}
+    @media(max-width: 892px){ margin: 120px 0 90px 0;}
     @media(max-width: 767px){ font-size: 45px;}
     @media(max-width:592px){
-        margin: 15.2vw auto 10vw;
+        margin: 20.2vw auto 15.2vw;
     }
-    @media(max-width: 392px){ font-size: 11.5vw; font-weight:700;  margin: 60px auto 40px;}
+    @media(max-width: 392px){ font-size: 11.5vw; font-weight:700;  margin: 80px auto 40px;}
 `
 export const Info = styled.div`
     display: flex;

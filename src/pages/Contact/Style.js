@@ -61,7 +61,12 @@ export const Info = styled.div`
 export const MapContainer = styled.div`
     display: flex;
     justify-content: center;
-    margin: 50px auto;
+    margin: 50px auto;   
+    div {
+        div:nth-of-type(2) {
+            display: none !important;
+        }
+    }  
 `
 export const Form = styled.div`    
     display: flex;

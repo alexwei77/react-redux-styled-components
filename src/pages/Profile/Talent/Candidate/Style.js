@@ -94,13 +94,16 @@ export const ToggleWrapper = styled.div`
         margin-right: 15px;
         background-color: #c5eac5 !important;
         border-color: #c5eac5 !important;
+        border: none !important;        
         &.switch.on {
             background-color: #c5eac5 !important;
         }  
         div {            
             border-color: rgb(76,191,105) !important;
             box-shadow: none !important;
-            background-color: rgb(76,191,105) !important;        
+            background-color: rgb(76,191,105) !important; 
+            height: 26px !important;
+            width: 26px !important;       
         }
     }
     @media(max-width: 767px){
@@ -202,9 +205,9 @@ export const Detail = styled.div`
     @media(max-width:392px){
         
         div {
-            div:first-child{
-                margin-left: 16vw;
-            }
+            // div:first-child{
+            //     margin-left: 16vw;
+            // }
             p {
                 font-size: 3.5vw;
             }

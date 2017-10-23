@@ -9,8 +9,8 @@ const initialState = {
 const auth_reducer = (state = initialState, action) => {
     switch(action.type){
         case Types.SIGNUP_SUCCESS:
-            console.log('SIGNUP_SUCCESS');            
-            return Object.assign({}, state, { isLoggedIn: true, profileID: action.data});
+            console.log('SIGNUP_SUCCESS');                       
+            return Object.assign({}, state, { isLoggedIn: true, profileId: action.data});
         case Types.SIGNUP_FAIL:
             console.log('SIGNUP_FAIL');
             return state;
@@ -21,7 +21,7 @@ const auth_reducer = (state = initialState, action) => {
             console.log('SIGNUP_TYPE');
             return Object.assign({}, state, { type: action.signUpType })
         case Types.EDIT_TYPE:
-            console.log('EDIT_TYPE', action.flag);        
+            console.log('EDIT_TYPE');        
             return Object.assign({}, state, { isEditable: action.flag })
         default:
             return state;

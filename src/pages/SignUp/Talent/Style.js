@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import Images from '../../../themes/images'
 
 export const Wrapper = styled.div`  
 `
@@ -11,11 +10,12 @@ export const Heading = styled.h1`
     margin: 90px 0;
 
     @media(max-width: 1023px){ font-size: 55px;}
+    @media(max-width: 892px){ margin: 120px 0 90px 0;}
     @media(max-width: 767px){ font-size: 45px;}
     @media(max-width:592px){
-        margin: 15.2vw auto 10vw;
+        margin: 20.2vw auto 15.2vw;
     }
-    @media(max-width: 392px){ font-size: 11.5vw; font-weight:700;  margin: 60px auto 40px;}
+    @media(max-width: 392px){ font-size: 11.5vw; font-weight:700;  margin: 80px auto 40px;}
 `
 export const ButtonWrapper = styled.div`
     ${props =>props.signup ? 'margin: 75px 0 50px;':'margin: 50px 0 35px;'}
@@ -26,14 +26,6 @@ export const ButtonWrapper = styled.div`
         flex-direction: column;
         align-items: center; 
         ${props =>props.signup ? 'margin: 35px 0 0;':'margin: 50px 0 35px;'}       
-    }
-    button {
-        background: transparent !important;
-        outline: none;
-        font-family: 'NudistaLight' !important;
-        padding-top: 0 !important;
-        padding-bottom: 0 !important;
-        width: auto !important;
     }
 `
 export const SpinWrapper = styled.div`
@@ -46,7 +38,7 @@ export const SpinWrapper = styled.div`
         margin: 70px 0 70px;     
     }
 `
-export const GoogleButton =styled.div`
+export const SocialButton =styled.div`
     display: flex;
     align-items: center;
     justify-content: center;    
@@ -55,15 +47,15 @@ export const GoogleButton =styled.div`
     width: 400px;
     font-size: 25px;
     border-radius: 50px;
-    background-color:#ecebeb; 
+    background-color: ${props =>props.google ? '#ecebeb;':'#3b5998;'}
     p { 
         margin-left: 5px; 
         font-weight: 700;
-        color:#333;
+        color: ${props =>props.google ? '#333;':'#fff;'}
     }
     img {
          margin-right: 5px;
-         width:60px;
+         width: ${props =>props.google ? '60px;':'45px;'}         
     }
 
     &:hover { cursor: pointer;}
@@ -74,7 +66,7 @@ export const GoogleButton =styled.div`
         width: 39vw;
         margin: 0 2vw;
         img {
-            width:45px;
+            width: ${props =>props.google ? '45px;':'35px;'}   
         }
     }
     @media(max-width:767px){
@@ -85,52 +77,6 @@ export const GoogleButton =styled.div`
     @media(max-width: 392px){
          font-size: 17px; 
          width: 90vw;
-    }
-`
-export const FacebookButton = styled.div`
-    margin: 0 1.4vw;
-    button {
-        text-align: center;
-        background: url(${Images.facebook1}) no-repeat 45px center #3b5998 !important;
-        background-size: 45px !important;
-        border: none;
-        border-radius: 50px;
-        color: #fff;
-        cursor: pointer;        
-        font-size: 25px;                
-        height: 70px;
-        padding-left: 45px;
-        width: 400px !important;
-
-        @media(max-width:1023px){  
-            background: url(${Images.facebook1}) no-repeat 4.4vw center #3b5998 !important; 
-            background-size: 35px !important;  
-            font-size: 2.5vw;
-            height: 60px;
-            width: 39vw !important;
-            margin: 0 2vw;
-        }
-        @media(max-width:767px){
-            background: url(${Images.facebook1}) no-repeat 55px center #3b5998 !important; 
-            background-size: 35px !important; 
-            font-size: 20px;
-            width: 350px !important;
-            margin-bottom: 30px;
-        }
-        @media(max-width: 392px){
-            background: url(${Images.facebook1}) no-repeat 16vw center #3b5998 !important; 
-            background-size: 35px !important; 
-            font-size: 17px; 
-            width: 90vw !important;
-       }
-       @media(max-width: 350px){
-            background: url(${Images.facebook1}) no-repeat 14vw center #3b5998 !important; 
-            background-size: 35px !important; 
-        }
-        @media(max-width: 320px){
-            background: url(${Images.facebook1}) no-repeat 11vw center #3b5998 !important; 
-            background-size: 35px !important; 
-        }
     }
 `
 export const CircleButton = styled.div`

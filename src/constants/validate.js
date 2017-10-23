@@ -22,7 +22,7 @@ export function fullnameValidate(name){
 
 export function socialValidate(value){
     let email = value.toLowerCase()   
-    if (email.indexOf('https://linkedin.com') !== -1 || email.indexOf('https://google.com') !== -1 || email.indexOf('https://facebook.com') !== -1 || email.indexOf('https://github.com') !== -1) {
+    if (email.indexOf('linkedin.com') !== -1 || email.indexOf('google.com') !== -1 || email.indexOf('behance.com') !== -1 || email.indexOf('facebook.com') !== -1 || email.indexOf('github.com') !== -1) {
         return true
     }
     return false

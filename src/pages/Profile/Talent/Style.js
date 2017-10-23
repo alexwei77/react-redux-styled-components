@@ -12,13 +12,14 @@ export const Heading = styled.h1`
     font-weight: 400;    
 
     @media(max-width: 1023px){ font-size: 55px;}
+    @media(max-width: 892px){ margin: 120px 0 90px 0;}
     @media(max-width: 767px){ font-size: 45px;}
     @media(max-width:592px){
-        margin: 15.2vw auto 10vw;
+        margin: 20.2vw auto 15.2vw;
     }
     @media(max-width: 462px){ font-size: 35px; font-weight: 700}  
     @media(max-width:392px){
-        margin: 60px auto 40px;
+        margin: 80px auto 40px;
     }  
 `
 export const FieldWrapper = styled.div`
@@ -139,6 +140,21 @@ export const Input = styled.div`
         }
     }
 `
+export const AutoSuggest = styled.div`
+    width: 450px;
+    display: flex;
+    margin: -25px auto;
+    @media(max-width: 767px){
+        width: 60%;
+    }
+    @media(max-width: 592px){
+        width: 80%;
+    }
+    p {
+        color: #30ae1f;        
+        ${props =>props.active ? 'background-color:#09e910;color:#fff;border-radius:15px;padding:5px;':''}
+    }
+`
 export const UnderLine = styled.hr`
     width: 450px;
     border-top: 1px solid #c7c2c2;    
@@ -198,14 +214,16 @@ export const NextButton = styled.button`
     font-size: 25px;
     color: #fff;
     font-weight: 700;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     margin: 0 10px;
     font-family: 'NudistaLight';
     transition: 0.5s;
     -webkit-transition: 0.5s;
     outline: none;
+    a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
     @media(max-width:767px){
        padding: 15px 80px;
@@ -288,10 +306,8 @@ export const AddButton = styled.a`
     margin-top: 10px;
     transition: 0.2s;
     -webkit-transition: 0.2s;
-    
-    &:hover {
-        ${props =>props.active ? 'cursor: pointer;color: #fff; background-color: #c7c2c2;': ''}        
-    }
+    ${props =>props.active ? 'cursor: pointer;color: #fff; background-color: #c7c2c2;': ''}        
+  
     @media(max-width: 592px){
         margin-top: 15px;
     }

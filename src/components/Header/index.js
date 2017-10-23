@@ -6,16 +6,22 @@ import Model from '../Model'
 import { 
     Container, 
     Wrapper, 
-    ModelWrapper } from './Style'
+    ModelWrapper,
+    ProgressWrapper } from './Style'
 
 export default ({landing, percent, visible, save, edit}) => {    
     return (
-        <Container>
+        <Container percent={percent}>
             <Wrapper landing={landing} percent={percent}>
                 <Logo />
-                <Progress visible={visible} percent={percent} save={save}/>
+                {/* <ProgressWrapper> */}
+                    <Progress visible={visible} percent={percent} save={save}/>
+                {/* </ProgressWrapper> */}
                 <NavBar landing={landing} save={save} edit={edit}/>            
             </Wrapper>
+            <ProgressWrapper mobile>
+                <Progress visible={visible} percent={percent} save={save}/>
+            </ProgressWrapper>
             <ModelWrapper landing={landing}>
                 <Model />
             </ModelWrapper>

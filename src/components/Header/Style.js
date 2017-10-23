@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
-   
+        
 `
 
 export const Wrapper = styled.div`
@@ -11,8 +11,9 @@ export const Wrapper = styled.div`
     padding: 0 35px;
 
     @media(max-width:892px){
-        ${props => props.percent ? 'padding-bottom: 40px;justify-content: center;align-items: center;'
-            :''}
+        ${props => props.percent ? 'padding-bottom: 40px;justify-content: space-between;align-items: center;'
+            :''}        
+        ${props => props.percent ? '> div:nth-of-type(1){display: none;}': ''};
     }
 `
 export const ModelWrapper = styled.div`
@@ -22,4 +23,10 @@ export const ModelWrapper = styled.div`
         ${props =>props.landing ? 'display: block':''}
     }
     
+`
+export const ProgressWrapper = styled.div`
+    display: none;
+    @media(max-width: 892px){
+        display: block;
+    }
 `
