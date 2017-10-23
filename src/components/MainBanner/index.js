@@ -16,7 +16,7 @@ class MainBanner extends React.Component {
     
     pageNavigation = () => {  
         if(this.props.type === 'talent'){
-            // this.props.isLoggedIn ? browserHistory.push('/profile/talent') : browserHistory.push('/signup/talent')
+            this.props.isLoggedIn ? browserHistory.push('/profile/talent') : browserHistory.push('/signup/talent')
             browserHistory.push('/signup/talent')
         } else {
             browserHistory.push('/signup/employer')

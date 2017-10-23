@@ -166,17 +166,17 @@ class Category extends Component {
         this.props.actions.getSubRolesAndTechs(obj)
         
         obj.ProfileId = this.props.profileId       
-        // this.props.actions.postSignup2Data('Signup2', obj)
-            // .then(() => {
+        this.props.actions.postSignup2Data('Signup2', obj)
+            .then(() => {
                 setTimeout(() => {
                     browserHistory.push('/profile/talent/submition')
                 }, 2000)                  
-            // }).catch(() => {
-                // setTimeout(() => {
-                    // this.setState({ isLoading: false })
-                    // this.showAlert()                   
-                // }, 2000) 
-            // })  
+            }).catch(() => {
+                setTimeout(() => {
+                    this.setState({ isLoading: false })
+                    this.showAlert()                   
+                }, 2000) 
+            })  
     }
 
     render() {

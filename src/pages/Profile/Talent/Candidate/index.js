@@ -198,7 +198,7 @@ class Candidate extends Component {
                         </div>    
                         <div>                  
                         { this.props.social && this.props.social.map((social, index) => {                            
-                            return <p key={index}>{social.split('https://')[1]}</p>                                                                                   
+                            return <p key={index}>{social}</p>                                                                                   
                         })} 
                         </div>  
                     </div>                                                                                          

@@ -61,9 +61,9 @@ class SignUp extends Component {
     }
 
     componentWillMount() {
-        // if(this.props.isLoggedIn){
-        //     browserHistory.push('/profile/talent')
-        // }
+        if(this.props.isLoggedIn){
+            browserHistory.push('/profile/talent')
+        }
     }
 
     getValue = (e) => {
@@ -93,13 +93,13 @@ class SignUp extends Component {
                 Location: null
             }                          
             this.props.actions.getUser(obj.FirstName, obj.LastName, obj.Email)
-            // this.props.actions.signUpRequest('Signup1', obj)
-            // .then(() => {                                
+            this.props.actions.signUpRequest('Signup1', obj)
+            .then(() => {                                
                 browserHistory.push('/profile/talent')                 
-            // })
-            // .catch(() => {
+            })
+            .catch(() => {
                 // TODO: any processing
-            // }) 
+            }) 
         }, error => {
             const email = error.email;                
             const credential = error.credential;
@@ -127,16 +127,16 @@ class SignUp extends Component {
             LastName: this.state.fullname.split(' ')[1],
             Location: this.state.location
         }        
-        // this.props.actions.signUpRequest('Signup1', obj)
-            // .then(() => {               
+        this.props.actions.signUpRequest('Signup1', obj)
+            .then(() => {               
                 this.props.actions.getUser(obj.FirstName, obj.LastName, obj.Email) 
                 setTimeout(() => {
                     browserHistory.push('/profile/talent')
                 }, 3000)                    
-            // })
-            // .catch(() => {
-                // this.setState({ isLoading: false })
-            // })               
+            })
+            .catch(() => {
+                this.setState({ isLoading: false })
+            })               
     }
 
     render() {

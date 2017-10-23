@@ -14,9 +14,7 @@ export default ({landing, percent, visible, save, edit}) => {
         <Container percent={percent}>
             <Wrapper landing={landing} percent={percent}>
                 <Logo />
-                {/* <ProgressWrapper> */}
-                    <Progress visible={visible} percent={percent} save={save}/>
-                {/* </ProgressWrapper> */}
+                <Progress visible={visible} percent={percent} save={save}/>
                 <NavBar landing={landing} save={save} edit={edit}/>            
             </Wrapper>
             <ProgressWrapper mobile>

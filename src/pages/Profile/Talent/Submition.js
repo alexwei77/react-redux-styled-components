@@ -178,17 +178,17 @@ class Submition extends Component {
         this.props.actions.getSubmitionData(obj)
 
         obj.ProfileId = this.props.profileId        
-        // this.props.actions.postSubmitionData('Signup3', obj)
-            // .then(() => {                
+        this.props.actions.postSubmitionData('Signup3', obj)
+            .then(() => {                
                 setTimeout(() => {
                     browserHistory.push(path)
                 },2000)   
-            // }).catch(() => {
-                // setTimeout(() => {
-                    // this.setState({ isLoading: false })
-                    // alert("Failed!")                    
-                // }, 2000) 
-            // })         
+            }).catch(() => {
+                setTimeout(() => {
+                    this.setState({ isLoading: false })
+                    alert("Failed!")                    
+                }, 2000) 
+            })         
     }
 
     alertOptions = {
