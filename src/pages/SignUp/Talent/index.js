@@ -91,10 +91,10 @@ class SignUp extends Component {
                 FirstName: user.displayName.split(' ')[0],
                 LastName: user.displayName.split(' ')[1],
                 Location: null
-            }                          
-            this.props.actions.getUser(obj.FirstName, obj.LastName, obj.Email)
-            this.props.actions.signUpRequest('Signup1', obj)
-            .then(() => {                                
+            }                                      
+            this.props.actions.signUpRequest('Profile/Signup1', obj)
+            .then(() => {  
+                this.props.actions.getUser(obj.FirstName, obj.LastName, obj.Email)                              
                 browserHistory.push('/profile/talent')                 
             })
             .catch(() => {
@@ -127,7 +127,7 @@ class SignUp extends Component {
             LastName: this.state.fullname.split(' ')[1],
             Location: this.state.location
         }        
-        this.props.actions.signUpRequest('Signup1', obj)
+        this.props.actions.signUpRequest('Profile/Signup1', obj)
             .then(() => {               
                 this.props.actions.getUser(obj.FirstName, obj.LastName, obj.Email) 
                 setTimeout(() => {

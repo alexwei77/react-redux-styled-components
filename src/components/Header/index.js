@@ -9,16 +9,16 @@ import {
     ModelWrapper,
     ProgressWrapper } from './Style'
 
-export default ({landing, percent, visible, save, edit}) => {    
+export default ({landing, percent, visible, edit}) => {    
     return (
         <Container percent={percent}>
             <Wrapper landing={landing} percent={percent}>
-                <Logo />
-                <Progress visible={visible} percent={percent} save={save}/>
-                <NavBar landing={landing} save={save} edit={edit}/>            
+                <Logo />                
+                <Progress visible={visible} percent={percent}/>                
+                <NavBar landing={landing} edit={edit}/>            
             </Wrapper>
             <ProgressWrapper mobile>
-                <Progress visible={visible} percent={percent} save={save}/>
+                <Progress visible={visible} percent={percent}/>
             </ProgressWrapper>
             <ModelWrapper landing={landing}>
                 <Model />

@@ -56,8 +56,11 @@ export const Avatar = styled.img`
     }
 `
 export const User = styled.div`
-    margin-left: 65px;
-
+    margin-left: 70px;
+    h1 { 
+        color: #333;
+        font-weight: normal;
+    }
     p {
         font-size: 25px;
     }    
@@ -88,20 +91,21 @@ export const ToggleWrapper = styled.div`
     float: left;    
     p {
         font-size: 25px;
+        color: #333;
         margin-right: 15px;
     }
     div {
         margin-right: 15px;
-        background-color: #c5eac5 !important;
-        border-color: #c5eac5 !important;
+        background-color: #E3F5E9 !important;
+        border-color: #E3F5E9 !important;
         border: none !important;        
         &.switch.on {
-            background-color: #c5eac5 !important;
+            background-color: #E3F5E9 !important;
         }  
         div {            
-            border-color: rgb(76,191,105) !important;
+            border-color: #79cc90 !important;
             box-shadow: none !important;
-            background-color: rgb(76,191,105) !important; 
+            background-color: #79cc90 !important; 
             height: 26px !important;
             width: 26px !important;       
         }
@@ -136,7 +140,7 @@ export const CircleWrapper = styled.div`
     }
 `
 export const BgCircle = styled.div`
-    background-color: #c5eac5;
+    background-color: #E3F5E9;
     border-radius: 100px;
     display: flex;
     justify-content: center;  
@@ -156,7 +160,11 @@ export const BgCircle = styled.div`
     }
 `
 export const Detail = styled.div`
-    margin-left: 65px;
+    margin-left: 70px;
+    h1 { 
+        color: #333;
+        font-weight: normal;
+    }
     div {
         display: flex;
         div {
@@ -172,6 +180,7 @@ export const Detail = styled.div`
         p {
             font-size: 15px;
             line-height: 3px;
+            color: #333;
             @media(max-width: 767px){
                 font-size: 2vw;
             }
@@ -205,9 +214,6 @@ export const Detail = styled.div`
     @media(max-width:392px){
         
         div {
-            // div:first-child{
-            //     margin-left: 16vw;
-            // }
             p {
                 font-size: 3.5vw;
             }
@@ -219,6 +225,10 @@ export const FieldWrapper = styled.div`
     flex-direction: column;
     margin: auto;
     max-width: 800px;
+    h1 { 
+        color: #333;
+        font-weight: normal;
+    }
     div {
         display: flex;       
         margin-top: 10px; 
@@ -278,6 +288,10 @@ export const TagWrapper = styled.div`
     flex-direction: column;
     margin: 70px auto;
     max-width: 800px;
+    h1 { 
+        color: #333;
+        font-weight: normal;
+    }
     @media(max-width:1124px){
         margin-left: 12vw;
     }
@@ -301,30 +315,34 @@ export const Slider = styled.div`
     margin: 70px auto;
     max-width: 800px;
     width: 90% !important;
+    h1 { 
+        color: #333;
+        font-weight: normal;
+    }
 
     div {
         margin-top: 30px;
         div:first-child {
-            background-color: #c5eac5 !important;
-            border: 1px solid #c5eac5 !important;
+            background-color: #E3F5E9 !important;
+            border: 1px solid #E3F5E9 !important;
+            height: 10px !important;
         }
         div:nth-child(2) {
-            background-color: #4cbf69 !important;
-            border: 1px solid #4cbf69 !important;
+            background-color: #79cc90 !important;
+            border: 1px solid #79cc90 !important;
+            height: 10px !important;
         }
         div:nth-child(3) {
             margin-top: 0;
             margin-left: -20px;
             background-color: transparent !important;
-            border: 40px solid #4cbf69 !important;
+            border: 40px solid #79cc90 !important;
             border-radius: 40% !important;
             width: 1px !important;
             height: 1px !important;
             border-bottom: 20px solid transparent !important;
             border-left: 20px solid transparent !important;
             border-right: 20px solid transparent !important;
-            // transition: 0.3s;
-            // -webkit-transition: 0.3s;
             
             &:hover {
                 box-shadow: none !important;
@@ -339,15 +357,13 @@ export const Slider = styled.div`
             margin-top: 0;
             margin-left: -20px;
             background-color: transparent !important;
-            border: 40px solid #4cbf69 !important;
+            border: 40px solid #79cc90 !important;
             border-radius: 40% !important;
             width: 1px !important;
             height: 1px !important;
             border-bottom: 20px solid transparent !important;
             border-left: 20px solid transparent !important;
             border-right: 20px solid transparent !important;
-            // transition: 0.2s;
-            // -webkit-transition: 0.2s;
             
             &:hover {
                 box-shadow: none !important;
@@ -367,20 +383,20 @@ export const Slider = styled.div`
         a {
             border: 1px solid #FFF;
             border-radius: 50px;
-            background-color: #c5eac5;
+            background-color: #E3F5E9;
             padding: 10px 30px;
             display: flex;
             justify-content: center;
             align-items: center;
             text-transform: uppercase;  
-            margin: 0 80px;                     
+            margin: 20px 80px 0;                     
         }
         @media(max-width:1124px){
             a:first-child {
-                margin: 0 10vw 0 5vw;
+                margin: 20px 10vw 0 5vw;
             }
             a:last-child {
-                margin: 0 5vw 0 10vw;
+                margin: 20px 5vw 0 10vw;
             }
         }
         @media(max-width:492px){
@@ -389,10 +405,10 @@ export const Slider = styled.div`
                 padding: 10px 6vw;
             }
             a:first-child {
-                margin: 0 10vw 0 0;
+                margin: 20px 10vw 0 0;
             }
             a:last-child {
-                margin: 0 0 0 10vw;
+                margin: 20px 0 0 10vw;
             }
         }
     }
@@ -420,6 +436,10 @@ export const Info = styled.div`
     margin: 70px auto;
     max-width: 800px;   
     flex-wrap: wrap;
+    h1 { 
+        color: #333;
+        font-weight: normal;
+    }
 
     p {
         font-size: 17px;
@@ -459,9 +479,9 @@ export const Contact = styled.div`
         padding: 20px 80px;    
         color: #FFF;
         font-size: 25px;
-        font-weight: 700;
+        font-family: 'NudistaBold' !important;
         border-radius: 50px;        
-        background-color: #4cbf69;
+        background-color: #79cc90;
         transition: 0.5s;
         -webkit-transition: 0.5s;
     

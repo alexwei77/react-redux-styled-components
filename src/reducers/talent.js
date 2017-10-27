@@ -7,7 +7,8 @@ const initialState = {
     locations : [],
     beverage: '',
     social: [],
-    status: 0  
+    status: 0,
+    isCompleted: false  
 }
 
 const talent_reducer = (state = initialState, action) => {
@@ -18,7 +19,7 @@ const talent_reducer = (state = initialState, action) => {
             });
         case Types.GET_SUBMITION_DATA:                                              
             return Object.assign({}, state, { 
-                locations: action.data.Locations, beverage: action.data.Beverage, social: action.data.Social, status: action.data.Status
+                locations: action.data.Locations, beverage: action.data.Beverage, social: action.data.Social, status: action.data.Status, isCompleted: true
             })
         case Types.UPDATE_STATUS:                        
             return Object.assign({}, state, { 
@@ -30,7 +31,7 @@ const talent_reducer = (state = initialState, action) => {
             else if(action.key === 'tech')
                 return Object.assign({}, state, { techs: action.data})          
             else
-                return Object.assign({}, state, { locations: action.data})                         
+                return Object.assign({}, state, { locations: action.data})                
         default:
             return state;
     }   

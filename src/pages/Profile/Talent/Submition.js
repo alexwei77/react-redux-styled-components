@@ -168,18 +168,18 @@ class Submition extends Component {
     }
 
     nextPageNavigation = (path) => {
-        const obj = {            
+        const obj = { 
+            ProfileId: this.props.profileId,           
             Locations: this.state.locations,
             Beverage: this.state.beverage,
             Social: this.state.urls,
             Status: this.state.status
         }
-        this.setState({ isLoading: true })
-        this.props.actions.getSubmitionData(obj)
-
-        obj.ProfileId = this.props.profileId        
-        this.props.actions.postSubmitionData('Signup3', obj)
-            .then(() => {                
+        this.setState({ isLoading: true })        
+          
+        this.props.actions.postSubmitionData('Profile/Signup3', obj)
+            .then(() => {      
+                this.props.actions.getSubmitionData(obj)          
                 setTimeout(() => {
                     browserHistory.push(path)
                 },2000)   

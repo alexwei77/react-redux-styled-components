@@ -8,7 +8,7 @@ import Model from '../Model'
 import { 
     Wrapper,
     ModelWrapper,
-    SaveButton, 
+    // SaveButton, 
     EditButton,
     Img, 
     Nav, 
@@ -83,22 +83,28 @@ class Navigation extends Component {
     }
 
     render() {
-        const { landing, save, edit } = this.props
+        const { landing, save, edit, type } = this.props
         return (
             <Wrapper>
                 <ModelWrapper landing={landing}>
                     <Model />
                 </ModelWrapper>
-                <SaveButton save={save}>Save for later</SaveButton>
+                {/* <SaveButton save={save}>Save for later</SaveButton> */}
                 <EditButton edit={edit} onClick={() =>this.toggleEdit()}>Edit profile</EditButton>
                 { !this.state.isActive ? 
                     <Menu save={save} edit={edit} onClick={this.toggleNavigation}/> :  <Img onClick={this.toggleNavigation} src={Images.xButton} alt="" style={{width:'42px'}}/>
                 }                                             
                 <Nav className={this.state.isActive ? "active" : ""} >
                     <li><a onClick={() => this.navigationPage('/home')}>Home</a></li>
+                    <li>
+                        { type === 'talent' ?
+                            <a onClick={() => this.navigationPage('/profile/talent/candidate')}>My Profile</a> : <a onClick={() => this.navigationPage('/profile/employer')}>My Profile</a>
+                        }                        
+                    </li>
                     <li><a onClick={() => this.navigationPage('/about')}>About</a></li>
                     <li><a onClick={() => this.navigationPage('/contact')}>Contact</a></li>
-                    <li><a onClick={() => this.navigationPage('/')}>Privacy and GDPR</a></li>
+                    <li><a onClick={() => this.navigationPage('/privacy')}>Privacy and GDPR</a></li>
+                    <li><a onClick={() => this.navigationPage('/faq')}>FAQ</a></li>
                     <li><a onClick={() => window.location.assign('https://www.linkedin.com')}>LinkedIn</a></li>
                     <li><a onClick={() => window.location.assign('https://www.facebook.com')}>Facebook</a></li>
                 </Nav>

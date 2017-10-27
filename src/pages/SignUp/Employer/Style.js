@@ -106,13 +106,13 @@ export const Button = styled.div`
     width: 800px;
     display: flex;
     justify-content: center;
-    margin: 90px auto 60px;
+    margin: 100px auto;
     a {
         background-color: #4cbf69;
         padding: 20px 100px;    
         color: #FFF;
         font-size: 25px;
-        font-weight: 700;
+        font-family: 'NudistaBold' !important;
         border-radius: 50px;
         margin: auto;
         transition: 0.5s;

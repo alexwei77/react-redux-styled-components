@@ -23,7 +23,7 @@ export const Heading = styled.h1`
     }  
 `
 export const FieldWrapper = styled.div`
-    margin: 35px auto 0;
+    margin: 80px auto 0;
     max-width: 700px;
     text-align: center;
     @media(max-width: 767px){ margin: 80px auto;}
@@ -49,7 +49,7 @@ export const SubHeading = styled.p`
     }
 `
 export const ButtonWrapper = styled.div`
-    margin: 15px 0;
+    margin: 25px 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -59,7 +59,7 @@ export const ButtonWrapper = styled.div`
 
 export const Button = styled.a`
     border: 1px solid #FFF;
-    ${props =>props.active ? 'background-color: #4cbf69;color: #FFF;' : 'background-color: #c5eac5;color: #272525;'}
+    ${props =>props.active ? 'background-color: #79cc90;color: #FFF;' : 'background-color: #E3F5E9;'}
     border-radius: 50px;
     padding: 10px 30px;
     font-size: 16px;    
@@ -68,7 +68,7 @@ export const Button = styled.a`
     -webkit-transition: 0.5s;
 
     &:hover, &:focus {
-        background-color: #9eda9e;
+        background-color: #79cc90;
         color: #FFF;
         cursor: pointer;
     }
@@ -85,7 +85,7 @@ export const Button = styled.a`
 `
 export const RadioButton = styled.label`
     border: 1px solid #FFF;
-    ${props =>props.active ? 'background-color: #4cbf69;color: #FFF;' : 'background-color: #c5eac5;color: #272525;'}
+    ${props =>props.active ? 'background-color: #79cc90;color: #FFF;' : 'background-color: #E3F5E9;'}
     border-radius: 50px;
     padding: 10px 30px;
     font-size: 16px;    
@@ -98,7 +98,7 @@ export const RadioButton = styled.label`
     }
     
     &:hover, &:focus {
-        background-color: #9eda9e;
+        background-color: #79cc90;
         color: #FFF;
         cursor: pointer;
     }
@@ -215,7 +215,7 @@ export const NextButton = styled.button`
     color: #fff;
     font-weight: 700;
     margin: 0 10px;
-    font-family: 'NudistaLight';
+    font-family: 'NudistaBold' !important;
     transition: 0.5s;
     -webkit-transition: 0.5s;
     outline: none;
@@ -247,7 +247,7 @@ export const NavigationButton = styled.a`
     border-radius: 50px;        
     font-size: 25px;
     color: #fff;
-    font-weight: 700;
+    font-family: 'NudistaBold' !important;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -306,7 +306,7 @@ export const AddButton = styled.a`
     margin-top: 10px;
     transition: 0.2s;
     -webkit-transition: 0.2s;
-    ${props =>props.active ? 'cursor: pointer;color: #fff; background-color: #c7c2c2;': ''}        
+    ${props =>props.active ? 'cursor: pointer;color: #fff; background-color: #333;': ''}        
   
     @media(max-width: 592px){
         margin-top: 15px;
@@ -359,7 +359,7 @@ export const FormButton = styled.label`
     justify-content: space-between;
     align-items: center;
     border: 1px solid #FFF;
-    ${props =>props.active ? 'background-color: #4cbf69;color: #FFF;' : 'background-color: #c5eac5;color: #555;'}
+    ${props =>props.active ? 'background-color: #79cc90;color: #FFF;' : 'background-color: #E3F5E9;'}
     border-radius: 50px;
     padding: 10px 30px;
     font-size: 16px;    
@@ -371,7 +371,7 @@ export const FormButton = styled.label`
         display: none;
     }
     &:hover, &:focus {
-        background-color: #9eda9e;
+        background-color: #79cc90;
         color: #FFF;
         cursor: pointer;
     }

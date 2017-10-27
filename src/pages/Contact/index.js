@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import TextField from 'material-ui/TextField'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import { 
     Wrapper, 
@@ -13,6 +15,7 @@ import {
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import MapView from '../../components/Map'
+import { sendMessage } from '../../actions/auth'
 
 const styles = {
     floatingLabelStyle: {
@@ -24,10 +27,28 @@ const styles = {
 }
 
 class Contact extends Component {
-    getText = (e) => {        
-        if(e.keyCode === 13 && e.target.value) {            
-            console.log(e.target.value)            
+    getValue = (e) => {        
+        const { name, value } = e.target
+        this.setState({ [name]: value})
+    }
+
+    sendMessage = () => {
+        const { mail, name, comment } = this.state
+        if(mail === '' || name === '' || comment === '' ){
+            return
         }
+        const obj = {
+            Email: this.state.mail,
+            Name: this.state.name,
+            Body: this.state.comment
+        }
+        this.props.sendMessage('ContactForm', obj)
+            .then(() => {
+                alert('Message has been sent successfully!')
+            })
+            .catch(() => {
+                alert('Message has nott been sent. Please try again.')
+            })
     }
 
     render() {
@@ -37,14 +58,15 @@ class Contact extends Component {
                 <Heading>Contact</Heading>
                 <Info>
                     <h1>Agentify ApS</h1>
-                    <p>August Bournonvilles Passage 1<br/>1055 København K</p>                    
-                    <a onClick={() =>window.location.assign('https://hello@agnetify.me')}>hello@agnetify.me</a>
+                    <p>August Bournonvilles Passage 11055 København K</p>                    
+                    <a>hello@agnetify.me</a>
                 </Info>
                 <MapContainer><MapView/></MapContainer>
                 <Form>
                     <MuiThemeProvider>
-                        <TextField    
-                            onKeyDown={this.getText}                                                       
+                        <TextField 
+                            name="name"   
+                            onKeyDown={this.getValue}                                                       
                             floatingLabelText="Name"
                             floatingLabelStyle={styles.floatingLabelStyle}  
                             floatingLabelShrinkStyle={styles.floatingLabelShrinkStyle}                                
@@ -56,7 +78,8 @@ class Contact extends Component {
                 <Form>
                     <MuiThemeProvider>
                         <TextField    
-                            onKeyDown={this.getText}                                                       
+                            name="mail"
+                            onKeyDown={this.getValue}                                                       
                             floatingLabelText="E-mail"
                             floatingLabelStyle={styles.floatingLabelStyle}  
                             floatingLabelShrinkStyle={styles.floatingLabelShrinkStyle}                                
@@ -67,8 +90,9 @@ class Contact extends Component {
                 <UnderLine ></UnderLine>
                 <Form>
                     <MuiThemeProvider>
-                        <TextField    
-                            onKeyDown={this.getText}                                                       
+                        <TextField  
+                            name="comment"  
+                            onKeyDown={this.getValue}                                                       
                             floatingLabelText="Comment"
                             floatingLabelStyle={styles.floatingLabelStyle}  
                             floatingLabelShrinkStyle={styles.floatingLabelShrinkStyle}                                
@@ -79,11 +103,20 @@ class Contact extends Component {
                     </MuiThemeProvider>                         
                 </Form>                                            
                 <UnderLine ></UnderLine> 
-                <Button><a>Send</a></Button>
+                <Button><a onClick={this.sendMessage}>Send</a></Button>
                 <Footer />
             </Wrapper>
         )
     }
 }
 
-export default Contact
+// Map action to props
+const mapDispatchToProps = (dispatch) => {
+    return {
+        actions: bindActionCreators({
+            sendMessage            
+        }, dispatch)
+    }
+}
+
+export default connect(mapDispatchToProps)(Contact)

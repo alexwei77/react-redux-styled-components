@@ -8,6 +8,9 @@ class TalentPage extends Component {
         if(!this.props.isLoggedIn){
            this.props.type === 'talent' ? browserHistory.push('/signup/talent') : browserHistory.push('signup/employer') 
         }
+        if(this.props.isLoggedIn && this.props.isCompleted){
+            browserHistory.push('/profile/talent/candidate')
+        }
     }
 
     render() {
@@ -23,7 +26,8 @@ class TalentPage extends Component {
 const mapStateToProps = (state) => {
     return {        
         type: state.auth.type,
-        isLoggedIn: state.auth.isLoggedIn
+        isLoggedIn: state.auth.isLoggedIn,
+        isCompleted: state.talent.isCompleted
     }
 }
 

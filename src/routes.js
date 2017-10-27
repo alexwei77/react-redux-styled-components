@@ -12,6 +12,8 @@ import Submition from './pages/Profile/Talent/Submition'
 import Candidate from './pages/Profile/Talent/Candidate'
 import Standard from './pages/About'
 import Contact from './pages/Contact'
+import Privacy from './pages/Privacy'
+import FAQ from './pages/FAQ'
 
 export default (
     <Route path="/" component={ App }>
@@ -28,5 +30,7 @@ export default (
         <Route path="/profile/employer" component={ EmployerPage } />
         <Route path="/about" component={ Standard } />
         <Route path="/contact" component={ Contact } />
+        <Route path="/faq" component={ FAQ } />
+        <Route path="/privacy" component={ Privacy } />
     </Route>
 )

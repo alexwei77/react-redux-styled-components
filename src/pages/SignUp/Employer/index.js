@@ -10,7 +10,6 @@ import {
     UnderLine, 
     Button } from './Style'
 import Header from '../../../components/Header'
-import Footer from '../../../components/Footer'
 
 const styles = {
     floatingLabelStyle: {
@@ -37,7 +36,7 @@ class SignUp extends Component {
         return (
             <Wrapper>
                 <Header />
-                <Heading>Sign up now</Heading>                              
+                <Heading>Tell me more about Agentify</Heading>                              
                 <Form>
                     <MuiThemeProvider>
                         <TextField    
@@ -62,8 +61,7 @@ class SignUp extends Component {
                     </MuiThemeProvider>                         
                 </Form>                                            
                 <UnderLine ></UnderLine>                
-                <Button onClick={() => this.pageNavigation('/profile/employer')}><a>Sign up</a></Button>
-                <Footer />
+                <Button onClick={() => this.pageNavigation('/profile/employer')}><a>Tell me more</a></Button>                
             </Wrapper>
         )
     }

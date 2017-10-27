@@ -37,9 +37,6 @@ export const Info = styled.div`
         color: #4cbf69;
         font-size: 17px;
         line-height: 50px;
-        &:hover {
-            cursor: pointer;
-        }
     }
     @media(min-width:592px) and (max-width:1124px){
         margin-left: 12vw;
@@ -128,7 +125,7 @@ export const Button = styled.div`
         padding: 20px 100px;    
         color: #FFF;
         font-size: 25px;
-        font-weight: 700;
+        font-family: 'NudistaBold' !important;
         border-radius: 50px;
         margin: auto;
         transition: 0.5s;

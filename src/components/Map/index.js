@@ -4,7 +4,8 @@ import ReactMapboxGl, { Marker, Layer, Feature } from "react-mapbox-gl"
 import Images from '../../themes/images'
 
 const Map = ReactMapboxGl({
-    accessToken: "pk.eyJ1IjoibW9iaWxlZGV2Nzc1IiwiYSI6ImNqNXFyMnBhczBvM3kyd211M3dtZTh4ejQifQ.DA8_iVN0ijZKD4plfd-pOw"    
+    accessToken: "pk.eyJ1IjoibW9iaWxlZGV2Nzc1IiwiYSI6ImNqNXFyMnBhczBvM3kyd211M3dtZTh4ejQifQ.DA8_iVN0ijZKD4plfd-pOw",
+    scrollZoom: false    
 })
 
 const style = {

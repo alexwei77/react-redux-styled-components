@@ -66,6 +66,10 @@ export const Avatar = styled.img`
 export const LocationWrapper = styled.div`
     display: flex;
     flex-direction: column;
+    h1 { 
+        color: #333;
+        font-weight: normal;
+    }
     @media(min-width:1024px){
         margin: 70px 0 70px 65px;
         min-width: 550px;
@@ -101,7 +105,7 @@ export const CircleWrapper = styled.div`
     }
 `
 export const BgCircle = styled.div`
-    background-color: #c5eac5;
+    background-color: #E3F5E9;
     border-radius: 100px;
     display: flex;
     justify-content: center;  
@@ -121,7 +125,11 @@ export const BgCircle = styled.div`
     }
 `
 export const Detail = styled.div`
-    margin-left: 65px;
+    margin-left: 70px;
+    h1 { 
+        color: #333;
+        font-weight: normal;
+    }
     div {
         display: flex;
         div {
@@ -138,6 +146,7 @@ export const Detail = styled.div`
         p {
             font-size: 15px;
             line-height: 3px;
+            color: #333;
             @media(max-width: 767px){
                 font-size: 2vw;
             }
@@ -182,6 +191,10 @@ export const TagWrapper = styled.div`
     flex-direction: column;
     margin: 70px auto;
     max-width: 800px;
+    h1 { 
+        color: #333;
+        font-weight: normal;
+    }
     @media(max-width:1124px){
         margin-left: 12vw;
     }
@@ -206,6 +219,10 @@ export const Info = styled.div`
     margin: 0 auto 70px;
     max-width: 800px;   
     flex-wrap: wrap;
+    h1 { 
+        color: #333;
+        font-weight: normal;
+    }
 
     p {
         font-size: 17px;
@@ -257,6 +274,10 @@ export const FieldWrapper = styled.div`
     max-width: 800px;
     display: flex;
     flex-direction: column;
+    h1 { 
+        color: #333;
+        font-weight: normal;
+    }
     div {
         display: flex;        
         align-items: center;
@@ -324,9 +345,9 @@ export const Contact = styled.div`
         padding: 20px 80px;    
         color: #FFF;
         font-size: 25px;
-        font-weight: 700;
+        font-family: 'NudistaBold' !important;
         border-radius: 50px;        
-        background-color: #4cbf69;
+        background-color: #79cc90;
         transition: 0.5s;
         -webkit-transition: 0.5s;
     

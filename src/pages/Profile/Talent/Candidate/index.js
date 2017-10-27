@@ -74,6 +74,12 @@ class Candidate extends Component {
         }
     }
 
+    componentWillMount() {
+        if(!this.props.isCompleted){
+            browserHistory.push('/signup/talent')
+        }
+    }
+
     componentWillReceiveProps(nextProps) {
         const { subRoles, techs, locations } = nextProps
         this.setState({
@@ -154,7 +160,7 @@ class Candidate extends Component {
                                 strokeWidth="12"
                                 sqSize="140"/>                            
                         </BgCircle>
-                        <p>complete</p>
+                        {percentage === 100 ? <p>complete</p> : <p>uncomplete</p>}
                     </CircleWrapper>                    
                     <Detail>
                         <h1>Contacts details</h1>
@@ -198,7 +204,7 @@ class Candidate extends Component {
                         </div>    
                         <div>                  
                         { this.props.social && this.props.social.map((social, index) => {                            
-                            return <p key={index}>{social}</p>                                                                                   
+                            return <p key={index}>{social.split('https://')[1]}</p>                                                                                   
                         })} 
                         </div>  
                     </div>                                                                                          
@@ -227,7 +233,7 @@ class Candidate extends Component {
                         step={1}
                         value={value}
                         min={0}
-                        max={100}
+                        max={150}
                         onChange={this.onChange}                                                
                     /> 
                     <div>
@@ -252,7 +258,7 @@ class Candidate extends Component {
 
 // Map state to props
 const mapStateToProps = (state) => {
-    const { roles, subRoles, locations, status, social, techs } = state.talent
+    const { roles, subRoles, locations, status, social, techs, isCompleted } = state.talent
     return {  
         user: state.auth,
         isEditable: state.auth.isEditable,  
@@ -261,7 +267,8 @@ const mapStateToProps = (state) => {
         locations,
         status,
         social,
-        techs    
+        techs,
+        isCompleted    
     }
 }
 

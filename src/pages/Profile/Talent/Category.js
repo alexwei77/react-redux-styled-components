@@ -157,17 +157,18 @@ class Category extends Component {
                 }                
             }
         })
-        const obj = {            
+        const obj = {      
+            ProfileId: this.props.profileId,
             Roles: roles,
             SubRoles: subRoles,
             Technologies: this.state.tags
         }
-        this.setState({ isLoading: true })
-        this.props.actions.getSubRolesAndTechs(obj)
+        this.setState({ isLoading: true })        
         
         obj.ProfileId = this.props.profileId       
-        this.props.actions.postSignup2Data('Signup2', obj)
+        this.props.actions.postSignup2Data('Profile/Signup2', obj)
             .then(() => {
+                this.props.actions.getSubRolesAndTechs(obj)
                 setTimeout(() => {
                     browserHistory.push('/profile/talent/submition')
                 }, 2000)                  
@@ -220,8 +221,7 @@ class Category extends Component {
                                             <FormButton active={values.Fullstack_Engineer}><Checkbox field="Fullstack_Engineer" value="fullstack"/>Fullstack Engineer</FormButton>                                                                        
                                             <FormButton active={values.Mobile}><Checkbox field="Mobile" value="Mobile"/>Mobile</FormButton>
                                             <FormButton active={values.DevOps_and_Tooling}><Checkbox field="DevOps_and_Tooling" value="DevOps_and_Tooling"/>DevOps and Tooling</FormButton>
-                                            <FormButton active={values.QA}><Checkbox field="QA" value="QA"/>QA</FormButton>
-                                            {/* <Button active={values.other}><Checkbox field="other" value="other"/>Other</Button> */}
+                                            <FormButton active={values.QA}><Checkbox field="QA" value="QA"/>QA</FormButton>                                            
                                         </FormButtonWrapper>
                                     </div>                                                               
                                     <div style={values.role === 'Sales' ? { display: 'block'} : { display: 'none' }}>
@@ -230,8 +230,7 @@ class Category extends Component {
                                             <FormButton active={values.Sales_Representative}><Checkbox field="Sales_Representative" value="Sales_Representative"/>Sales Representative</FormButton>
                                             <FormButton active={values.Account_Executive}><Checkbox field="Account_Executive" value="Account_Executive"/>Account Executive</FormButton>
                                             <FormButton active={values.Sales_Manager}><Checkbox field="Sales_Manager" value="Sales_Manager"/>Sales Manager</FormButton>                                                                                     
-                                            <FormButton active={values.Sales_Director}><Checkbox field="Sales_Director" value="Sales_Director"/>Sales Director</FormButton>                                                              
-                                            {/* <Button active={values.other}><Checkbox field="other" value="other"/>other</Button> */}
+                                            <FormButton active={values.Sales_Director}><Checkbox field="Sales_Director" value="Sales_Director"/>Sales Director</FormButton>                                                                                                          
                                         </FormButtonWrapper>
                                     </div>                               
                                     <div style={values.role === 'Product' ? { display: 'block'} : { display: 'none' }}>
@@ -240,8 +239,7 @@ class Category extends Component {
                                             <FormButton active={values.Product_Analyst}><Checkbox field="Product_Analyst" value="Product_Analyst"/>Product Analyst</FormButton>
                                             <FormButton active={values.Product_Marketing_Manager}><Checkbox field="Product_Marketing_Manager" value="Product_Marketing_Manager"/>Product Marketing Manager</FormButton>
                                             <FormButton active={values.Product_Manager}><Checkbox field="Product_Manager" value="Product_Manager"/>Product Manager</FormButton>                                                                           
-                                            <FormButton active={values.Product_Line_Director}><Checkbox field="Product_Line_Director" value="Product_Line_Director"/>Product Line Director</FormButton>                                 
-                                            {/* <Button active={values.other}><Checkbox field="other" value="other"/>other</Button> */}
+                                            <FormButton active={values.Product_Line_Director}><Checkbox field="Product_Line_Director" value="Product_Line_Director"/>Product Line Director</FormButton>                                                                             
                                         </FormButtonWrapper>
                                     </div>                               
                                     <div style={values.role === 'Marketing' ? { display: 'block'} : { display: 'none' }}>
@@ -251,8 +249,7 @@ class Category extends Component {
                                             <FormButton active={values.Marketing_Manager}><Checkbox field="Marketing_Manager" value="Marketing_Manager"/>Marketing Manager</FormButton>
                                             <FormButton active={values.SEO_Manager}><Checkbox field="SEO_Manager" value="SEO_Manager"/>SEO Manager</FormButton>                                   
                                             <FormButton active={values.Community_Manager}><Checkbox field="Community_Manager" value="Community_Manager"/>Community Manager</FormButton>
-                                            <FormButton active={values.Copy}><Checkbox field="Copy" value="Copy"/>Copy</FormButton>                            
-                                            {/* <Button active={values.other}><Checkbox field="other" value="other"/>other</Button> */}
+                                            <FormButton active={values.Copy}><Checkbox field="Copy" value="Copy"/>Copy</FormButton>                                                                        
                                         </FormButtonWrapper>
                                     </div>                                
                                     <div style={values.role === 'Design' ? { display: 'block'} : { display: 'none' }}>
@@ -262,8 +259,7 @@ class Category extends Component {
                                             <FormButton active={values.UI_Designer}><Checkbox field="UI_Designer" value="UI_Designer"/>UI Designer</FormButton>
                                             <FormButton active={values.UX_Designer}><Checkbox field="UX_Designer" value="UX_Designer"/>UI/UX Designer</FormButton>                                  
                                             <FormButton active={values.Art_Director}><Checkbox field="Art_Director" value="Art_Director"/>Art Director</FormButton>
-                                            <FormButton active={values.Digital_Designer}><Checkbox field="Digital_Designer" value="Digital_Designer"/>Digital Designer</FormButton>
-                                            {/* <Button active={values.other}><Checkbox field="other" value="other"/>other</Button> */}
+                                            <FormButton active={values.Digital_Designer}><Checkbox field="Digital_Designer" value="Digital_Designer"/>Digital Designer</FormButton>                                            
                                         </FormButtonWrapper>
                                     </div>                               
                                     <div style={values.role === 'Finance' ? { display: 'block'} : { display: 'none' }}>
@@ -273,8 +269,7 @@ class Category extends Component {
                                             <FormButton active={values.Accountant}><Checkbox field="Accountant" value="Accountant"/>Accountant</FormButton>
                                             <FormButton active={values.Controller}><Checkbox field="Controller" value="Controller"/>Controller</FormButton>                                
                                             <FormButton active={values.Finance_Manager}><Checkbox field="Finance_Manager" value="Finance_Manager"/>Finance Manager</FormButton>
-                                            <FormButton active={values.CEO}><Checkbox field="CEO" value="CEO"/>CEO</FormButton>
-                                            {/* <Button active={values.other}><Checkbox field="other" value="other"/>other</Button>                  */}
+                                            <FormButton active={values.CEO}><Checkbox field="CEO" value="CEO"/>CEO</FormButton>                                            
                                         </FormButtonWrapper>
                                     </div> 
                                 </FormWrapper>  

@@ -83,9 +83,7 @@ export const ListItems = styled.li`
 export const Link = styled.a`
     color: #333;
     text-decoration: none;    
-    font-size: 23px; 
-    -webkit-transition: 0.5s;
-    transition: 0.5s;   
+    font-size: 23px;   
     ${props =>props.social ? '':'margin: 0 15px;'}
 
     img {
@@ -94,7 +92,8 @@ export const Link = styled.a`
 
     &:hover, &:focus {        
         cursor: pointer;
-        color: #777;
+        color: #999;
+        text-decoration: underline;
     }
     @media(max-width: 767px) {
         ${props =>props.social ? '':'margin: 5px 15px; font-size: 20px;'}

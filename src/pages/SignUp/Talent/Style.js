@@ -18,25 +18,21 @@ export const Heading = styled.h1`
     @media(max-width: 392px){ font-size: 11.5vw; font-weight:700;  margin: 80px auto 40px;}
 `
 export const ButtonWrapper = styled.div`
-    ${props =>props.signup ? 'margin: 75px 0 50px;':'margin: 50px 0 35px;'}
+    ${props =>props.signup ? 'margin: 100px 0;':'margin: 50px 0 35px;'}
     display: flex;
     justify-content: center;    
     
     @media(max-width: 767px){        
         flex-direction: column;
         align-items: center; 
-        ${props =>props.signup ? 'margin: 35px 0 0;':'margin: 50px 0 35px;'}       
+        ${props =>props.signup ? '':'margin: 50px 0 35px;'}       
     }
 `
 export const SpinWrapper = styled.div`
-    margin: 150px 0 150px;
+    margin: 105px 0;
     display: flex;
     justify-content: center;
     align-items: center;
-
-    @media(max-width: 767px){        
-        margin: 70px 0 70px;     
-    }
 `
 export const SocialButton =styled.div`
     display: flex;
@@ -105,7 +101,7 @@ export const Form = styled.div`
     align-items: center;
 
     div {
-        width: 820px !important;
+        width: 810px !important;
         font-size: 23px !important;
         font-family: 'NudistaLight' !important;
     }
@@ -114,21 +110,21 @@ export const Form = styled.div`
         ${props =>props.error ? 'color:#f7be28 !important':''}       
     }
     input {
-        color: #333 !important;
+        color: #333 !important;        
     }
     @media(max-width: 1023px){
         div {
-            width: 705px !important;
+            width: 700px !important;
         }
     }
     @media(max-width: 767px){
         div {
-            width: calc(92% - 40px) !important;
+            width: calc(90% - 40px) !important;
         }
     }
     @media(max-width: 392px){
         div {            
-            width: 83% !important;
+            width: 82% !important;
             font-size: 20px !important;
         }
         label {
@@ -152,7 +148,7 @@ export const UnderLine = styled.hr`
 `
 export const Img = styled.img` 
     margin-top: 30px;
-    width: 30px;
+    width: 40px;
     @media(max-width: 392px){ 
        width: 8vw;
     }
@@ -162,9 +158,8 @@ export const SignUpButton = styled.a`
     padding: 20px 80px;    
     color: #FFF;
     font-size: 25px;
-    font-weight: 700;
-    border-radius: 50px;
-    margin: 60px 0 120px 0;
+    font-family: 'NudistaBold' !important;
+    border-radius: 50px;    
     transition: 0.5s;
     -webkit-transition: 0.5s;
 

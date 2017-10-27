@@ -2,8 +2,7 @@ import styled from 'styled-components'
 
 export const Wrapper = styled.div`
     border: 1px solid #FFF;
-    background-color: #c5eac5;
-    color: #272525;
+    background-color: #E3F5E9;    
     border-radius: 50px;
     padding: 10px 30px;
     font-size: 16px;        
@@ -13,18 +12,15 @@ export const Wrapper = styled.div`
     -webkit-transition: 0.5s;
 
     &:hover, &:focus {
-        background-color: #9eda9e;
+        background-color: #E3F5E9;
         color: #FFF;
         cursor: pointer;
     }
     @media(max-width:767px){
         font-size: 15px;
         align-items: center;
-        display: flex;
-        // height: 35px;
-        justify-content: center;
-        // padding: 10px 60px;
-        // width: calc(100% * (1/10) - 10px - 1px);
+        display: flex;        
+        justify-content: center;                
     }
 `
 export const Icon = styled.img`

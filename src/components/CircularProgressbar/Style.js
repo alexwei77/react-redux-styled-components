@@ -10,7 +10,7 @@ export const Svg = styled.svg`
 `
 export const FgCircle = styled.circle`
     fill: none;
-    stroke: rgb(76, 191, 105);
+    stroke: #79cc90;
     transition: 2s;
 `
 export const BgCircle = styled.circle`

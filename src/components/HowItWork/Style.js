@@ -19,7 +19,6 @@ export const Wrapper = styled.div`
         padding: 75px 20px 0;
     }    
 `
-
 export const FlexWrapper = styled.div`
     margin-top: 20px;
     
@@ -33,7 +32,6 @@ export const FlexWrapper = styled.div`
         flex-direction: column;        
     }
 `
-
 export const Heading = styled.h2`
     cursor: pointer;
     display: inline-block;        
@@ -54,7 +52,6 @@ export const Heading = styled.h2`
         font-size: 32px;
     }
 `
-
 export const Img = styled.div`  
 
     @media (min-width: 1200px) {        
@@ -110,6 +107,7 @@ export const Content = styled.div`
     p {
         margin: 25px 10px;
         text-align: left;
+        line-height: 30px;
     }
     @media (min-width: 768px) {
         width: 50%;

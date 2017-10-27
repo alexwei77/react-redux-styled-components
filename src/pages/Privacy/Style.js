@@ -23,20 +23,17 @@ export const Heading = styled.h1`
 export const Info = styled.div`
     display: flex;
     flex-direction: column;
-    margin: 0 auto 70px;
+    margin: 0 auto 30px;
     max-width: 800px;   
     flex-wrap: wrap;
-
-    p {
+    ul { margin-top: 0 }
+    p, li {
         font-size: 17px;
         line-height: 25px;
         color: #333;
         margin: auto;   
-        text-align: justify;     
-    }
-    span {
-        color: #4cbf69;
-        font-size: 17px
+        text-align: justify;
+        margin-bottom: 10px;     
     }
     @media(max-width:1124px){
         margin-left: 12vw;
@@ -54,7 +51,7 @@ export const Info = styled.div`
         }
     }
     @media(max-width:392px){
-        p, span {
+        p {
             font-size: 15px;
         }
     }

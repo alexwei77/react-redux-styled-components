@@ -49,7 +49,7 @@ export function postSubmitionData(step, data){
     return function (dispatch) {
         return new Promise((resolve, reject) => {
             request(step, data)
-                .then(response => {                   
+                .then(response => {                  
                     resolve(true);
                 })
                 .catch(error => {

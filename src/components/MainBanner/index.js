@@ -37,7 +37,7 @@ class MainBanner extends React.Component {
                         smarter and hire better talent. Now.<br/></Text>
                     }
                     <Heading>Get your own agent</Heading>
-                    <SignUpLink onClick={() =>this.pageNavigation()}>Go</SignUpLink>
+                    <SignUpLink onClick={() =>this.pageNavigation()}>Get Agent</SignUpLink>
                     <Text smaller><Image src={ Images.clock } />2 min. Sign up - and it's free for talent (forever)</Text>
                 </Content>
                     <Arrow><img src={Images.arrowDown} alt="arrow" /></Arrow>

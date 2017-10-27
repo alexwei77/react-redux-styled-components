@@ -5,8 +5,7 @@ export function signUpRequest(step, userInfo){
     return function (dispatch) {
         return new Promise((resolve, reject) => {
             request(step, userInfo)
-                .then(response => {                    
-                    window.localStorage.setItem('profileId', response)                    
+                .then(response => {                                      
                     dispatch({
                         type: Types.SIGNUP_SUCCESS,
                         data: response
@@ -19,6 +18,21 @@ export function signUpRequest(step, userInfo){
                         type: Types.SIGNUP_FAIL,
                         error: error
                     });
+                    reject(false);
+                })
+        })
+    }
+}
+
+export function sendMessage(step, data){
+    return function (dispatch) {
+        return new Promise((resolve, reject) => {
+            request(step, data)
+                .then(response => {                    
+                    resolve(true);
+                })
+                .catch(error => {
+                    console.log('Error', error)
                     reject(false);
                 })
         })

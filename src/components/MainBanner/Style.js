@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import Images from '../../themes/images'
 
 export const Wrapper = styled.div`
-    padding: 12vw 0 10vw 0;
+    padding: 9vw 0 10vw 0;
     @media(max-width:1224px){
         padding-top: 160px;
     }
@@ -10,16 +10,13 @@ export const Wrapper = styled.div`
     @media(max-width: 767px) {
         padding: 85px 0 0 0;
     }
-    
 `
-
 export const Content = styled.div`
     background: url(${Images.triangle}) no-repeat top;    
     font-size: 22px;
     line-height: 31px;
     margin: auto;
-    padding: ${props =>props.employer ? '45px 0 150px 0': '10px 0 150px 0'};    
-    // padding: 10px 0 150px 0;
+    padding: ${props =>props.employer ? '40px 0 150px 0': '10px 0 150px 0'};    
     filter: grayscale(0);
     position: relative;
     bottom: 30px;
@@ -45,12 +42,21 @@ export const Content = styled.div`
         bottom: 60px;
         padding: ${props =>props.employer ? '35px 0 150px 0': '10px 0 150px 0'};
     }
+    @media(max-width:350px){
+        bottom: 60px;
+        padding: ${props =>props.employer ? '60px 0 150px 0': '10px 0 150px 0'};
+    }
+    @media(max-width:320px){
+        bottom: 60px;
+        padding: 10px 0 150px 0;
+    }
 `
 
 export const Heading = styled.h3`    
     font-weight: 300;
     line-height: normal;
     margin:30px 0 35px 0;
+    letter-spacing: 2px;
 
     @media(min-width: 1024px) {
         font-size: 80px;
@@ -70,7 +76,7 @@ export const Text = styled.p`
     font-size: ${props => props.smaller ? '18px' : '22px'};
     margin: ${props => props.smaller ? '0 0 10px' : '35px 0 10px'};
     z-index: 0;
-    line-height: 35px;
+    line-height: 30px;
 
     @media(min-width:768px) and (max-width:1023px){
         font-size: ${props => props.smaller ? '13px' : '2.5vw'};
@@ -93,8 +99,9 @@ export const SignUpLink = styled.a`
     display: inline-block;
     font-size: 22px;
     margin-bottom: 15px;
-    padding: 20px 115px;
+    padding: 20px 80px;
     text-decoration: none;
+    font-family: 'NudistaBold' !important;
     font-weight: 700;
     color: #333;
     transition: 0.5s;
@@ -123,7 +130,6 @@ export const Image = styled.img`
     margin-right: 5px;
     position: relative;
     top: 5px;
-    
 `
 export const Arrow = styled.div`
 
@@ -137,42 +143,34 @@ export const Arrow = styled.div`
         position: absolute;
         margin-left: -25px;
         bottom: 0;
+        margin-bottom: 40px;
         animation: scrolldown 2s infinite;
     }
 
     @keyframes scrolldown {
         0% {            
             bottom: 0px;
-            // transform: scale(0.95, 0.95);
         }
         10% {            
             bottom: 3px;
-            // transform: scale(0.9, 0.9);
         }
         20% {            
             bottom: 6px;
-            // transform: scale(0.87, 0.87);
         }
         30% {            
             bottom: 9px;
-            // transform: scale(0.85, 0.85);
         }
         40% {            
             bottom: 12px;
-            // transform: scale(0.82, 0.82);
         }
         50% {            
             bottom: 15px;
-            // transform: scale(0.8, 0.8);
         }       
         100% {            
             bottom: 0px;
-            // transform: scale(1, 1);
         }
-        
     }
     @media(max-width:767px){
         display: none;
     }
-        
 `
