@@ -11,6 +11,7 @@ import {
     SignUpLink, 
     Image, 
     Arrow } from './Style'
+import { autoScrolling } from '../../jquery';
 
 class MainBanner extends React.Component {
     
@@ -21,6 +22,7 @@ class MainBanner extends React.Component {
         } else {
             browserHistory.push('/signup/employer')
         }
+        autoScrolling()
     }
 
     render() {
@@ -38,7 +40,7 @@ class MainBanner extends React.Component {
                     }
                     <Heading>Get your own agent</Heading>
                     <SignUpLink onClick={() =>this.pageNavigation()}>Get Agent</SignUpLink>
-                    <Text smaller><Image src={ Images.clock } />2 min. Sign up - and it's free for talent (forever)</Text>
+                    <Text smaller><Image src={ Images.clock } />2 min. Sign up - it's free for talent</Text>
                 </Content>
                     <Arrow><img src={Images.arrowDown} alt="arrow" /></Arrow>
             </Wrapper>

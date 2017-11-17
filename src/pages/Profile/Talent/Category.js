@@ -16,7 +16,9 @@ import {
     Wrapper, 
     Content, 
     Heading, 
-    FieldWrapper, 
+    FieldWrapper,
+    FlexWrapper,
+    TextFieldWrapper, 
     SubHeading, 
     ButtonWrapper, 
     RadioButton, 
@@ -29,7 +31,9 @@ import {
     Img,
     FormButton,
     FormButtonWrapper,
-    FormWrapper } from './Style'
+    FormWrapper,
+    AddButton } from './Style'
+import { autoScrolling } from '../../../jquery';
 
 const styles = {
     floatingLabelStyle: {
@@ -45,21 +49,26 @@ const styles = {
 class Category extends Component {
     constructor(props){
         super(props)        
-        this.state = {     
+        this.state = {
+            active: false,     
             initSubRole: {},                         
             tags: this.props.techs,
             engineering: "Backend Engineer, Frontend Engineer, Fullstack Engineer, Mobile, DevOps and Tooling, QA",
             sales: "Sales Representative, Account Executive, Sales Manager, Sales Director",
-            product: "Product Analyst, Product Marketign Manager, Product Manager, Product Line Director",
+            product: "Product Analyst, Product Marketing Manager, Product Manager, Product Line Director",
             marketing: "Growth Hacker, marketing Manager, SEO Manager, Community Manager, Copy",
             design: "UX Researcher, UI Designer, UI/UX Designer, Art Director, Digital Designer",
             finance: "Analyst, Accountant, Controller, Finance Manager, CEO",
-            isLoading: false  
+            isLoading: false,
+            tech: '',
+            isAvailable: false  
         }
     }
 
     componentWillMount(){        
         // subRolesForSave = {}
+        autoScrolling()
+        
         let temp = {}   
         if(this.props.subRoles){
             this.props.subRoles.map(subRole => {                 
@@ -89,8 +98,20 @@ class Category extends Component {
         if(e.keyCode === 13 && e.target.value) {            
             e.preventDefault()
             this.addTag(e.target.value)            
-            e.target.value = ''
-        }
+            e.target.value = null
+            this.setState({ isAvailable: false })
+        }        
+    }
+
+    getTech = (e) => {        
+        e.target.value ? this.setState({ isAvailable: true, tech: e.target.value }) : this.setState({ isAvailable: false, tech: e.target.value })
+    }
+
+    addTech = () => {
+        this.addTag(this.state.tech)
+        this.tagInput.input.value = null
+        this.tagInput.focus()
+        this.setState({ isAvailable: false })
     }
 
     pageNavigation = (path) => {
@@ -98,7 +119,8 @@ class Category extends Component {
             browserHistory.push('/')
         } else {
             browserHistory.push(path)
-        }        
+        } 
+        autoScrolling()      
     }
 
     alertOptions = {
@@ -164,9 +186,8 @@ class Category extends Component {
             Technologies: this.state.tags
         }
         this.setState({ isLoading: true })        
-        
-        obj.ProfileId = this.props.profileId       
-        this.props.actions.postSignup2Data('Profile/Signup2', obj)
+                  
+        !this.props.isCompleted ? this.props.actions.postSignup2Data('Profile/Signup2', obj)
             .then(() => {
                 this.props.actions.getSubRolesAndTechs(obj)
                 setTimeout(() => {
@@ -177,11 +198,11 @@ class Category extends Component {
                     this.setState({ isLoading: false })
                     this.showAlert()                   
                 }, 2000) 
-            })  
+            }) :  browserHistory.push('/profile/talent/submition')        
     }
 
     render() {
-        const { initSubRole, tags, isLoading } = this.state        
+        const { initSubRole, tags, isLoading, isAvailable } = this.state        
         return (
             <Wrapper>   
                 <Form 
@@ -198,8 +219,7 @@ class Category extends Component {
                             <Content>                    
                                 <Heading>Help us by answering<br/>a few questions</Heading>                                        
                                 <FieldWrapper>
-                                    <SubHeading>Where do you see yourself?</SubHeading>
-                                    {/* <SubHeading small>(Choose up to three)</SubHeading>                                     */}
+                                    <SubHeading>Where do you see yourself?</SubHeading>                                    
                                     <RadioGroup field="role">
                                         <ButtonWrapper>
                                             <RadioButton active={values.role === 'Engineering'}><Radio value="Engineering"/>Engineering</RadioButton>
@@ -273,22 +293,29 @@ class Category extends Component {
                                         </FormButtonWrapper>
                                     </div> 
                                 </FormWrapper>  
-                                <FieldWrapper>
+                                <FieldWrapper tech>
                                     <SubHeading>Preferred technology</SubHeading> 
-                                    <Input>
-                                        <MuiThemeProvider>
-                                            <TextField                                                
-                                                onKeyDown={this.getText}                                                       
-                                                floatingLabelText="Type here..."
-                                                floatingLabelStyle={styles.floatingLabelStyle}  
-                                                floatingLabelShrinkStyle={styles.floatingLabelShrinkStyle}                                
-                                                underlineShow={false}
-                                            />              
-                                        </MuiThemeProvider>                         
-                                    </Input>                                            
-                                    <UnderLine ></UnderLine>                      
+                                    <FlexWrapper>
+                                        <TextFieldWrapper>
+                                            <Input>
+                                                <MuiThemeProvider>
+                                                    <TextField            
+                                                        ref={(input) => {this.tagInput = input}}                                     
+                                                        onKeyDown={this.getText}
+                                                        onChange={this.getTech}                                                       
+                                                        floatingLabelText="Type here..."
+                                                        floatingLabelStyle={styles.floatingLabelStyle}  
+                                                        floatingLabelShrinkStyle={styles.floatingLabelShrinkStyle}                                
+                                                        underlineShow={false}
+                                                    />              
+                                                </MuiThemeProvider>                         
+                                            </Input>                                            
+                                            <UnderLine ></UnderLine> 
+                                        </TextFieldWrapper>
+                                        { isAvailable ? <AddButton active onClick={this.addTech}>Add</AddButton> : <AddButton >Add</AddButton> }
+                                    </FlexWrapper>                     
                                 </FieldWrapper>
-                                <TagWrapper>
+                                <TagWrapper tech>
                                     <TagList data={ tags } removeTag={(index) => this.removeTag(index)} />
                                 </TagWrapper>
                                 { isLoading ? <Navigation><ReactLoading type="spinningBubbles" color="#4cbf69" height='70' width='70' /></Navigation> :
@@ -310,10 +337,11 @@ class Category extends Component {
 
 // Map state to props
 const mapStateToProps = (state) => {
-    const { subRoles, techs } = state.talent
+    const { subRoles, techs, isCompleted } = state.talent
     return {        
         subRoles,
         techs,
+        isCompleted,
         profileId: state.auth.profileId,
         isLoggedIn: state.auth.isLoggedIn
     }

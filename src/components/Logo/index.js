@@ -1,9 +1,9 @@
 import React from 'react'
 import { browserHistory } from 'react-router'
-import $ from 'jquery'
 
 import { Heading, Img } from './Style'
 import Images from '../../themes/images'
+import { logoAnimation } from '../../jquery';
 
 class Logo extends React.Component {
     constructor(){
@@ -14,11 +14,11 @@ class Logo extends React.Component {
     }
 
     gotoHome = (path) => {       
-       setTimeout(function() {
-            $('.logo').addClass("animation")
+        setTimeout(function() {
+           logoAnimation('add') 
         }, 100) 
-       setTimeout(function() {
-           $('.logo').removeClass("animation")     
+        setTimeout(function() {
+           logoAnimation('remove')
            browserHistory.push(path) 
         }, 300)             
     }

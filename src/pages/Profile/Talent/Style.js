@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { isMobile } from 'react-device-detect';
 
 export const Wrapper = styled.div`  
 `
@@ -26,9 +27,9 @@ export const FieldWrapper = styled.div`
     margin: 80px auto 0;
     max-width: 700px;
     text-align: center;
-    @media(max-width: 767px){ margin: 80px auto;}
-    @media(max-width: 462px){ margin: 65px auto;}
-    @media(max-width: 392px){ margin: 50px auto;}
+    @media(max-width: 767px){ margin: ${props =>props.tech ? '80px auto 0;':'80px auto;'}}
+    @media(max-width: 462px){ margin: ${props =>props.tech ? '80px auto 0;':'65px auto;'}}
+    @media(max-width: 392px){ margin: ${props =>props.tech ? '80px auto 0;':'50px auto;'}}
 `
 export const SubHeading = styled.p`
     margin-bottom: 0px;
@@ -46,6 +47,11 @@ export const SubHeading = styled.p`
         font-weight: 700;
         width: 70%;
         margin-left: 15%;
+    }
+    &:hover {
+        span {
+            cursor: pointer;
+        }
     }
 `
 export const ButtonWrapper = styled.div`
@@ -127,7 +133,7 @@ export const Input = styled.div`
     }
     @media(max-width: 767px){
         div {
-            ${props =>props.add ? 'width: 100% !important;':'width: 60% !important;'}
+            ${props =>props.place ? 'width: 100% !important;':'width: 100% !important;'}
             font-size: 17px !important;
         }
         label {
@@ -136,19 +142,19 @@ export const Input = styled.div`
     }
     @media(max-width: 592px){         
         div {
-            ${props =>props.add ? 'width: 100% !important;':'width: 80% !important;'}                
+            ${props =>props.place ? 'width: 100% !important;':'width: 100% !important;'}                
         }
     }
 `
 export const AutoSuggest = styled.div`
-    width: 450px;
+    width: 540px;
     display: flex;
     margin: -25px auto;
     @media(max-width: 767px){
-        width: 60%;
+        width: calc(50% + 90px);
     }
     @media(max-width: 592px){
-        width: 80%;
+        width: calc(60% + 90px);
     }
     p {
         color: #30ae1f;        
@@ -161,14 +167,14 @@ export const UnderLine = styled.hr`
     margin-top: 0px;
 
     @media(max-width: 767px){    
-        ${props =>props.add ? 'width: 100%;':'width: 60%;'}
+        ${props =>props.place ? 'width: 100%;':'width: 100%;'}
     }
     @media(max-width: 592px){    
-        ${props =>props.add ? 'width: 100%;':'width: 80%;'}
+        ${props =>props.place ? 'width: 100%;':'width: 100%;'}
     }
 `
 export const TagWrapper = styled.div`
-    margin: 70px auto 0;
+    margin: ${props =>props.tech ? '40px auto 0;':'70px auto 0;'}
     max-width: 700px;
     text-align: center;
 `
@@ -208,7 +214,7 @@ export const PrevButton = styled.a`
 `
 export const NextButton = styled.button`
     border: 1px solid #fff;
-    background-color: #4cbf69; 
+    background-color: #79cc90; 
     padding: 20px 95px;     
     border-radius: 50px;        
     font-size: 25px;
@@ -237,12 +243,12 @@ export const NextButton = styled.button`
     }
     &:hover {
         cursor: pointer;
-        background-color: #67c77f;
+        background-color: #4cbf69;
     }
 `
 export const NavigationButton = styled.a`
     border: 1px solid #fff;
-    background-color: #4cbf69; 
+    background-color: #79cc90; 
     padding: 20px 95px;     
     border-radius: 50px;        
     font-size: 25px;
@@ -266,8 +272,7 @@ export const NavigationButton = styled.a`
         padding: 10px 10vw;
     }
     &:hover {
-        cursor: pointer;
-        background-color: #67c77f;
+        ${props =>props.inactive ? '':'cursor: pointer;background-color: #4cbf69;'}                
     }
 `
 export const Img = styled.img`
@@ -286,7 +291,7 @@ export const FlexWrapper = styled.div`
     align-items: center; 
     
     @media(max-width: 592px){
-        flex-direction: column;
+        ${props =>props.place ? '':'flex-direction: column;'}
     }
 `
 export const TextFieldWrapper = styled.div`
@@ -294,7 +299,7 @@ export const TextFieldWrapper = styled.div`
         width: 50%;
     }
     @media(max-width: 592px){
-        width: 80%
+        ${props =>props.place ? 'width: 60%':'width: 80%;'}        
     }
 `
 export const AddButton = styled.a`
@@ -370,9 +375,8 @@ export const FormButton = styled.label`
     input {
         display: none;
     }
-    &:hover, &:focus {
-        background-color: #79cc90;
-        color: #FFF;
+    &:hover, &:focus {                
+        ${isMobile ? '':'background-color: #79cc90;color: #FFF;'}
         cursor: pointer;
     }
     @media(max-width:767px){
@@ -385,5 +389,40 @@ export const FormButton = styled.label`
     img {
         width: 15px;
         margin-left: 15px;
+    }
+`
+export const ToggleWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;        
+    p {
+        font-size: 25px;
+        color: #333;
+        margin-right: 15px;
+    }
+    div {
+        margin-right: 15px;
+        background-color: #E3F5E9 !important;
+        border-color: #E3F5E9 !important;
+        border: none !important;        
+        &.switch.on {
+            background-color: #E3F5E9 !important;
+        }  
+        div {            
+            border-color: #79cc90 !important;
+            box-shadow: none !important;
+            background-color: #79cc90 !important; 
+            height: 26px !important;
+            width: 26px !important;       
+        }
+    }
+    @media(max-width: 767px){
+        p { font-size: 3.2vw }
+    }
+    @media(max-width: 592px){
+        p { font-size: 5vw }
+    }
+    @media(max-width:392px){
+        p { font-size: 6vw;}
     }
 `

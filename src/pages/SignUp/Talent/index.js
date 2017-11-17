@@ -22,7 +22,8 @@ import {
     SignUpButton } from './Style'
 import Images from '../../../themes/images'
 import firebase from '../../../services/firebase'
-import { signUpRequest, getUser } from '../../../actions/auth'
+import { signUpRequest } from '../../../actions/auth'
+import { reset } from '../../../reducers'
 import * as Validate from '../../../constants/validate'
 
 const styles = {
@@ -91,11 +92,13 @@ class SignUp extends Component {
                 FirstName: user.displayName.split(' ')[0],
                 LastName: user.displayName.split(' ')[1],
                 Location: null
-            }                                      
+            }  
+            this.props.actions.reset()                                       
             this.props.actions.signUpRequest('Profile/Signup1', obj)
             .then(() => {  
-                this.props.actions.getUser(obj.FirstName, obj.LastName, obj.Email)                              
-                browserHistory.push('/profile/talent')                 
+                // this.props.actions.getUser(obj.FirstName, obj.LastName, obj.Email)                              
+                browserHistory.push('/profile/talent')    
+                alert('login success')             
             })
             .catch(() => {
                 // TODO: any processing
@@ -126,10 +129,11 @@ class SignUp extends Component {
             FirstName: this.state.fullname.split(' ')[0],
             LastName: this.state.fullname.split(' ')[1],
             Location: this.state.location
-        }        
+        }   
+        this.props.actions.reset()     
         this.props.actions.signUpRequest('Profile/Signup1', obj)
             .then(() => {               
-                this.props.actions.getUser(obj.FirstName, obj.LastName, obj.Email) 
+                this.props.actions.getUser(this.state.fullname, obj.Email) 
                 setTimeout(() => {
                     browserHistory.push('/profile/talent')
                 }, 3000)                    
@@ -239,7 +243,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         actions: bindActionCreators({
-            getUser, signUpRequest
+            signUpRequest, reset
         }, dispatch)
     }
 }

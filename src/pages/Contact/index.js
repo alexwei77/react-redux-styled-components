@@ -3,6 +3,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import TextField from 'material-ui/TextField'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import ReactLoading from 'react-loading'
 
 import { 
     Wrapper, 
@@ -27,14 +28,24 @@ const styles = {
 }
 
 class Contact extends Component {
+    constructor(){
+        super();
+        this.state = {
+            isLoading: false
+        }
+    }
+
     getValue = (e) => {        
         const { name, value } = e.target
         this.setState({ [name]: value})
     }
 
     sendMessage = () => {
+        
         const { mail, name, comment } = this.state
-        if(mail === '' || name === '' || comment === '' ){
+        console.log(mail, name, comment)
+        if(mail === undefined || name === undefined || comment === undefined ){
+            alert('Please fill out')
             return
         }
         const obj = {
@@ -42,12 +53,15 @@ class Contact extends Component {
             Name: this.state.name,
             Body: this.state.comment
         }
-        this.props.sendMessage('ContactForm', obj)
+        this.setState({ isLoading: true })
+        this.props.actions.sendMessage('ContactForm', obj)
             .then(() => {
                 alert('Message has been sent successfully!')
+                this.setState({ isLoading: false })
             })
             .catch(() => {
-                alert('Message has nott been sent. Please try again.')
+                alert('Message has not been sent. Please try again.')
+                this.setState({ isLoading: false })
             })
     }
 
@@ -58,8 +72,9 @@ class Contact extends Component {
                 <Heading>Contact</Heading>
                 <Info>
                     <h1>Agentify ApS</h1>
-                    <p>August Bournonvilles Passage 11055 København K</p>                    
-                    <a>hello@agnetify.me</a>
+                    <p>August Bournonvilles Passage 1</p>
+                    <p>1055 København K</p>                    
+                    <a>hello@Agentify.me</a>
                 </Info>
                 <MapContainer><MapView/></MapContainer>
                 <Form>
@@ -103,7 +118,12 @@ class Contact extends Component {
                     </MuiThemeProvider>                         
                 </Form>                                            
                 <UnderLine ></UnderLine> 
-                <Button><a onClick={this.sendMessage}>Send</a></Button>
+                <Button>
+                    {this.state.isLoading ? 
+                        <ReactLoading type="spinningBubbles" color="#4cbf69" height='70' width='70' />
+                        : <a onClick={this.sendMessage}>Send</a>
+                    }
+                </Button>
                 <Footer />
             </Wrapper>
         )
@@ -119,4 +139,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapDispatchToProps)(Contact)
+export default connect(null, mapDispatchToProps)(Contact)

@@ -10,6 +10,7 @@ export const Container = styled.footer`
     text-align: center;
     height: 570px;
     justify-content: center;    
+    ${props =>props.safari ? '-webkit-filter: grayscale(0);':''}
 
     @media(min-width: 768px) {
         height: 550px;

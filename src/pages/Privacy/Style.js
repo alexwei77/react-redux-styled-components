@@ -31,7 +31,7 @@ export const Info = styled.div`
         font-size: 17px;
         line-height: 25px;
         color: #333;
-        margin: auto;   
+        margin: auto 0;   
         text-align: justify;
         margin-bottom: 10px;     
     }

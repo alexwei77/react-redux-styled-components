@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import TextField from 'material-ui/TextField'
+import Switch from 'react-toggle-switch'
+import "../../../../node_modules/react-toggle-switch/dist/css/switch.min.css"
 import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -30,10 +32,12 @@ import {
     FlexWrapper,
     AddButton,
     IconWrapper,
-    SocialImg } from './Style'
+    SocialImg,
+    ToggleWrapper } from './Style'
 import { getSubmitionData, postSubmitionData } from '../../../actions/talent'
 import * as Validate from '../../../constants/validate'
 import { cities } from '../../../constants/data'
+import { autoScrolling } from '../../../jquery';
 
 const styles = {
     floatingLabelStyle: {
@@ -61,10 +65,15 @@ class Submition extends Component {
             linkedin: false,
             behance: false,
             git: false,
-            isHighlight: false      
+            isHighlight: false,
+            switched: false,
+            enableAdd: false      
         }
     }
     componentWillMount() {
+
+        autoScrolling()
+
         let socialType        
         if(this.props.social){
             this.props.social.map(url => {
@@ -82,13 +91,13 @@ class Submition extends Component {
         }        
     }
 
-    addLocation = (text) => {        
+    addTag = (text) => {        
         let temp = this.state.locations.slice()
         temp.push(text)
         this.setState({ locations: temp })        
     }
 
-    removeLocation = (index) => {
+    removeTag = (index) => {
         let temp = this.state.locations.slice()
         temp.splice(index, 1)
         this.setState({ locations: temp })
@@ -111,24 +120,47 @@ class Submition extends Component {
         if(e.target.value.length >= 2){            
             this.setState({ location: e.target.value })
         } 
-        if(e.keyCode === 8 && e.target.value.length < 5){
-            console.log('eeee', e.target.value.length)
+        if(e.keyCode === 8 && e.target.value.length < 5){            
             this.setState({ location: '', isHighlight: false })
         }          
         if(e.keyCode === 13 && e.target.value) {                        
-            this.addLocation(e.target.value)  
-            this.setState({ location: '', isHighlight: false })
+            this.addTag(e.target.value)  
+            this.setState({ location: '', enableAdd: false, isHighlight: false })
             e.target.value = ''              
         }
-        if(e.keyCode === 40 && location.length >= 3){
-            this.setState({ isHighlight: true })
+        if(e.keyCode === 40 && location.length >= 3){            
             cities.map(city => {
                 if(city.toLowerCase().indexOf(location.toLowerCase()) !== -1){
                     e.target.value = city
                 }
                 return true
             })
-        }
+            this.setState({ isHighlight: true, place: e.target.value })
+        }        
+    }
+
+    changeTarget = () => {
+        cities.map(city => {
+            if(city.toLowerCase().indexOf(this.state.location.toLowerCase()) !== -1){
+                this.tagInput.input.value = city
+            }
+            return true
+        })
+        this.setState({
+            isHighlight: false,
+            location: ''
+        })
+    }
+
+    getPlace = (e) => {
+        e.target.value.length > 1 ? this.setState({ enableAdd: true, place: e.target.value }) : this.setState({ enableAdd: false, place: e.target.value })        
+    }
+
+    addLocation = () => {
+        this.addTag(this.state.place)
+        this.setState({ location: '', enableAdd: false, isHighlight: false })
+        this.tagInput.input.value = ''
+        this.tagInput.focus()
     }
 
     getUrl = (e) => {      
@@ -163,6 +195,14 @@ class Submition extends Component {
         this.urlInput.focus()
     }
 
+    toggleSwitch = () => {               
+        this.setState(prevState => {
+            return {
+                switched: !prevState.switched
+            }
+        })
+    }
+
     prevPageNavigation = (path) => {
         browserHistory.push(path)
     }
@@ -177,7 +217,7 @@ class Submition extends Component {
         }
         this.setState({ isLoading: true })        
           
-        this.props.actions.postSubmitionData('Profile/Signup3', obj)
+        !this.props.isCompleted ? this.props.actions.postSubmitionData('Profile/Signup3', obj)
             .then(() => {      
                 this.props.actions.getSubmitionData(obj)          
                 setTimeout(() => {
@@ -188,7 +228,7 @@ class Submition extends Component {
                     this.setState({ isLoading: false })
                     alert("Failed!")                    
                 }, 2000) 
-            })         
+            }) : browserHistory.push(path)       
     }
 
     alertOptions = {
@@ -206,9 +246,13 @@ class Submition extends Component {
         })
     }
 
+    gotoPage = (path) => {
+        browserHistory.push(path);
+        autoScrolling()
+    }
+
     render() {        
-        const { locations, beverage, status, isValidate, isLoading, location } = this.state             
-        console.log('loc', location)
+        const { locations, beverage, status, isValidate, isLoading, location, place } = this.state                             
         return (
             <Wrapper>
                 <Header visible percent={3} save/>
@@ -216,21 +260,27 @@ class Submition extends Component {
                     <Heading>Almost there...</Heading>
                     <FieldWrapper>
                         <SubHeading>Where would you like to work?</SubHeading> 
-                        <Input>
-                            <MuiThemeProvider>
-                                <TextField   
-                                    ref={(input) => {this.tagInput = input}} 
-                                    onKeyDown={this.getText} 
-                                    onBlur={this.blur}                                                      
-                                    floatingLabelText="Type city"
-                                    floatingLabelStyle={styles.floatingLabelStyle}  
-                                    floatingLabelShrinkStyle={styles.floatingLabelShrinkStyle}                                
-                                    underlineShow={false}
-                                />              
-                            </MuiThemeProvider>                         
-                        </Input>                                            
-                        <UnderLine ></UnderLine> 
-                        <AutoSuggest active={this.state.isHighlight}> 
+                        <FlexWrapper place>
+                            <TextFieldWrapper place>
+                                <Input>
+                                    <MuiThemeProvider>
+                                        <TextField   
+                                            ref={(input) => {this.tagInput = input}} 
+                                            onKeyDown={this.getText}
+                                            onChange={this.getPlace} 
+                                            onBlur={this.blur}                                                      
+                                            floatingLabelText="Type city"
+                                            floatingLabelStyle={styles.floatingLabelStyle}  
+                                            floatingLabelShrinkStyle={styles.floatingLabelShrinkStyle}                                
+                                            underlineShow={false}
+                                        />              
+                                    </MuiThemeProvider>                         
+                                </Input>                                            
+                                <UnderLine></UnderLine>
+                            </TextFieldWrapper>
+                        { this.state.enableAdd ? <AddButton active onClick={() => this.addLocation(place)}>Add</AddButton> : <AddButton >Add</AddButton> } 
+                        </FlexWrapper>
+                        <AutoSuggest active={this.state.isHighlight} onClick={() =>this.changeTarget()}> 
                         { location.length >= 3 && cities.map((city, index) => {     
                             let temp                       
                             if(city.toLowerCase().indexOf(location.toLowerCase()) !== -1 ){
@@ -241,7 +291,7 @@ class Submition extends Component {
                         </AutoSuggest>           
                     </FieldWrapper>
                     <TagWrapper>
-                        <TagList data={ locations } removeTag={(index) => this.removeLocation(index)} />
+                        <TagList data={ locations } removeTag={(index) => this.removeTag(index)} />
                     </TagWrapper>
                     <FieldWrapper>
                         <SubHeading>What is your preffered coffee?</SubHeading>                        
@@ -267,7 +317,7 @@ class Submition extends Component {
                         </IconWrapper>                                                                                                         
                         <FlexWrapper>
                             <TextFieldWrapper>    
-                                <Input add>
+                                <Input>
                                     <MuiThemeProvider>
                                         <TextField      
                                             ref={ (input) => {this.urlInput = input;}}                                    
@@ -279,7 +329,7 @@ class Submition extends Component {
                                         />              
                                     </MuiThemeProvider>                         
                                 </Input>                                            
-                                <UnderLine add></UnderLine> 
+                                <UnderLine></UnderLine> 
                             </TextFieldWrapper>
                             { isValidate ? <AddButton active onClick={this.addUrl}>Add</AddButton> : <AddButton >Add</AddButton> }                            
                         </FlexWrapper>                     
@@ -287,16 +337,27 @@ class Submition extends Component {
                     <FieldWrapper>
                         <SubHeading>What's your current status?</SubHeading>                        
                         <ButtonWrapper>
-                            <Button active={status === 1} onClick={() => this.getStatus(1)}>Active</Button>
-                            <Button active={status === 2} onClick={() => this.getStatus(2)}>Passive</Button>
-                            <Button active={status === 3} onClick={() => this.getStatus(3)}>It's complicated</Button>                                                                                                                
-                            <Button active={status === 4} onClick={() => this.getStatus(4)}>Undecided<img src={Images.remove} alt="" /></Button>                    
+                            <Button active={status === 0} onClick={() => this.getStatus(0)}>Active</Button>
+                            <Button active={status === 1} onClick={() => this.getStatus(1)}>Passive</Button>
+                            <Button active={status === 2} onClick={() => this.getStatus(2)}>It's complicated</Button>                                                                                                                
+                            <Button active={status === 3} onClick={() => this.getStatus(3)}>Undecided<img src={Images.remove} alt="" /></Button>                    
                         </ButtonWrapper>
+                    </FieldWrapper>
+                    <FieldWrapper>
+                        <SubHeading>I accept Agentifys <span onClick={() =>this.gotoPage('/tca')} style={{color: '#79cc90'}}>terms and conditions</span></SubHeading>
+                        <ToggleWrapper>
+                            <p>Yes</p>                            
+                                <Switch onClick={this.toggleSwitch} on={this.state.switched}/>                            
+                            <p>No</p>
+                        </ToggleWrapper>
                     </FieldWrapper>
                     { isLoading ? <Navigation><ReactLoading type="spinningBubbles" color="#4cbf69" height='70' width='70' /></Navigation> :
                         <Navigation>
                             <PrevButton prev onClick={() => this.prevPageNavigation('/profile/talent/category')}><Img src={Images.leftArrow} alt="left" /></PrevButton>
-                            <NavigationButton onClick={() => this.nextPageNavigation('/profile/talent/candidate')}>Submit<Img right src={Images.wRightArrow} alt="right" /></NavigationButton>                       
+                            { !this.state.switched ?
+                                <NavigationButton onClick={() => this.nextPageNavigation('/profile/talent/candidate')}>Submit<Img right src={Images.wRightArrow} alt="right" /></NavigationButton>
+                                : <NavigationButton inactive>Submit<Img right src={Images.wRightArrow} alt="right" /></NavigationButton>
+                            }
                         </Navigation>
                     }
                 </Content>
@@ -308,9 +369,9 @@ class Submition extends Component {
 
 // Map state to props
 const mapStateToProps = (state) => {
-    const { locations, beverage, status, social } = state.talent
+    const { locations, beverage, status, social, isCompleted } = state.talent
     return {        
-        locations, beverage, status, social,
+        locations, beverage, status, social, isCompleted,
         profileId: state.auth.profileId
     }
 }

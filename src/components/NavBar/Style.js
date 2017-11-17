@@ -1,12 +1,11 @@
 import styled from 'styled-components'
-import Images from '../../themes/images'
 
 export const Wrapper = styled.div`
     align-items: center;
     display: flex;
     justify-content: center;
     @media(max-width:592px){
-        margin-right: -15px;
+        margin-right: -25px;
     }
 `
 export const ModelWrapper = styled.div`
@@ -43,7 +42,7 @@ export const EditButton = styled.a`
     color: #fff;
     border-radius: 50px;
     padding: 10px 30px;
-    background-color: transparent;
+    background-color: ${props =>props.flag ? '#333;':'transparent;'}
     margin-right: 12px;
     @media(max-width:572px){
         margin-right: 0;
@@ -57,19 +56,27 @@ export const EditButton = styled.a`
     }
     &:hover {
         cursor: pointer;
-        background-color: #333;
+        background-color: ${props =>props.flag ? 'transparent;':'#333;'}
     }
 `
 
 export const Menu = styled.div`
-    background: url(${Images.hambugerButton});
-    background-size: cover;
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
+    display: flex;
+    margin-right: 7px;    
+    img {
+        width: 50px;
+        height: 50px;
+    }
+    img: last-child {
+        display: none;
+    }
     &:hover {
-        background: url(${Images.hoverMenu});
-        cursor: pointer;
+        img: first-child {
+            display: none;
+        }
+        img: last-child {
+            display: block;
+        }
     }
     @media(max-width:992px){
         ${props =>props.save? 'display:none':''}        
@@ -79,13 +86,42 @@ export const Menu = styled.div`
     }
     @media(max-width:392px){
         margin-right: 5px;
+        img {
+            width: 40px;
+            height: 40px;
+        }
+    }
+`
+export const MobileMenu = styled.div`
+    display: flex;
+    margin-right: 7px;    
+    img {
+        width: 50px;
+        height: 50px;
+    }
+    @media(max-width:992px){
+        ${props =>props.save? 'display:none':''}        
+    }
+    @media(max-width:572px){
+        ${props =>props.edit? 'display:none':''}
+    }
+    @media(max-width:392px){
+        margin-right: 5px;
+        img {
+            width: 40px;
+            height: 40px;
+        }
     }
 `
 export const Img = styled.img`
-    z-index: 6;
+    z-index: 10;
+    width: 42px;
     margin-right: 15px;
     &:hover {
         cursor: pointer;
+    }
+    @media(max-width:392px){        
+        width: 33px;        
     }
 `
 export const Nav = styled.ul`
@@ -120,51 +156,71 @@ export const Nav = styled.ul`
             &:hover, &:focus {
                 cursor: pointer;
                 opacity: 0.5
-            }
+            }            
         }
     }
     @media(max-width:392px){
         font-size: 8.2vw;
+        @media(max-height: 665px) {
+            font-size: 5vw;
+        }
+    }
+    @media(max-height: 665px) {
+        font-size: 5vh;
+        li {
+            padding: 1vh 0;
+        }
     }
 `
 
 export const LoginButton = styled.div`
-    background: url(${Images.login});
-    background-size: cover;
-    width: 18px;
-    height: 25px;
-    display: block !important;
-    &:hover {
-        margin-left: 1px;
-        cursor: pointer;
-    }
-`
-export const Container = styled.div`
-    border: 1px solid #fff;
-    border-radius: 50px;
-    height: 38px;
-    width: 38px;
-    z-index: 6;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    
+    z-index: 10;
+    img { 
+        width: 50px;
+        height: 50px;
+    }
+    img: last-child {
+        display: none;
+    }
     &:hover {
-        border: none;
-        margin-left: 2px;
-        div {
-            background: url(${Images.loginHover});
-            width: 51px;
-            height: 51px;
-            background-size: cover;
-            margin-left: -9px;
-            display: block !important;
+        img: first-child {
+            display: none;
         }
-    }  
+        img: last-child {
+            display: block;
+        }
+    }
     @media(max-width:992px){
         ${props =>props.save? 'display:none;':''}      
     }  
     @media(max-width:572px){
         ${props =>props.edit? 'display:none;':''}
+    }
+    @media(max-width:392px){        
+        img {
+            width: 40px;
+            height: 40px;
+        }
+    }
+`
+export const MobileLoginButton = styled.div`
+    display: flex;
+    z-index: 10;
+    img { 
+        width: 50px;
+        height: 50px;
+    }   
+    @media(max-width:992px){
+        ${props =>props.save? 'display:none;':''}      
+    }  
+    @media(max-width:572px){
+        ${props =>props.edit? 'display:none;':''}
+    }
+    @media(max-width:392px){        
+        img {
+            width: 40px;
+            height: 40px;
+        }
     }
 `

@@ -1,6 +1,9 @@
 import styled from 'styled-components'
 
-export const Wrapper = styled.div`    
+export const Wrapper = styled.div` 
+    h2 {
+        margin: 70px 0 -35px 12vw;    
+    }
 `
 export const Heading = styled.h1`
     margin: 90px 0 60px 12vw;
@@ -280,12 +283,12 @@ export const FieldWrapper = styled.div`
     }
     div {
         display: flex;        
-        align-items: center;
+        align-items: center;        
         margin: 5px 0;
         font-size: 25px;
         a {
-            border: 1px solid #c5eac5;
-            background-color: #c5eac5;
+            border: 1px solid #E3F5E9;
+            background-color: #E3F5E9;
             border-radius: 50px;
             display: flex;
             justify-content: center;

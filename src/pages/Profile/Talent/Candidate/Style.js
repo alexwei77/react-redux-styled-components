@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import Images from '../../../../themes/images'
 
 export const Wrapper = styled.div`    
 `
@@ -61,7 +62,7 @@ export const User = styled.div`
         color: #333;
         font-weight: normal;
     }
-    p {
+    p, span {
         font-size: 25px;
     }    
     @media(max-width: 767px){
@@ -160,6 +161,9 @@ export const BgCircle = styled.div`
     }
 `
 export const Detail = styled.div`
+    // input {
+    //     background: #dee8da !important;
+    // }
     margin-left: 70px;
     h1 { 
         color: #333;
@@ -180,12 +184,31 @@ export const Detail = styled.div`
         p {
             font-size: 15px;
             line-height: 3px;
-            color: #333;
+            color: #333;            
             @media(max-width: 767px){
                 font-size: 2vw;
             }
             @media(max-width:592px){
                 font-size: 2.5vw;
+            }
+        }
+        div {
+            div {
+                font-size: 15px !important;               
+                height: 33px !important;
+                width: 210px !important;
+                @media(max-width: 767px){
+                    font-size: 2vw !important;
+                    height: 4.3vw !important;
+                }
+                @media(max-width:592px){
+                    font-size: 2.5vw !important;
+                    height: 5.3vw !important;
+                    width: 35.4vw !important;
+                }
+                @media(max-width:392px){                    
+                    width: 49.5vw !important;
+                }
             }
         }        
     }
@@ -216,6 +239,12 @@ export const Detail = styled.div`
         div {
             p {
                 font-size: 3.5vw;
+            }
+            div {
+                div {
+                    font-size: 3.5vw !important;
+                    height: 7.3vw !important;
+                }
             }
         }
     }
@@ -319,97 +348,54 @@ export const Slider = styled.div`
         color: #333;
         font-weight: normal;
     }
-
-    div {
-        margin-top: 30px;
-        div:first-child {
-            background-color: #E3F5E9 !important;
-            border: 1px solid #E3F5E9 !important;
-            height: 10px !important;
-        }
-        div:nth-child(2) {
-            background-color: #79cc90 !important;
-            border: 1px solid #79cc90 !important;
-            height: 10px !important;
-        }
-        div:nth-child(3) {
-            margin-top: 0;
-            margin-left: -20px;
-            background-color: transparent !important;
-            border: 40px solid #79cc90 !important;
-            border-radius: 40% !important;
-            width: 1px !important;
-            height: 1px !important;
-            border-bottom: 20px solid transparent !important;
-            border-left: 20px solid transparent !important;
-            border-right: 20px solid transparent !important;
-            
-            &:hover {
-                box-shadow: none !important;
-                border-radius: 48% !important;
-                border-top-color: #08c715 !important;
-            }
-            &:focus {
-                outline: none !important;
-            }
-        }
-        div:last-child {
-            margin-top: 0;
-            margin-left: -20px;
-            background-color: transparent !important;
-            border: 40px solid #79cc90 !important;
-            border-radius: 40% !important;
-            width: 1px !important;
-            height: 1px !important;
-            border-bottom: 20px solid transparent !important;
-            border-left: 20px solid transparent !important;
-            border-right: 20px solid transparent !important;
-            
-            &:hover {
-                box-shadow: none !important;
-                border-radius: 48% !important;
-                border-top-color: #08c715 !important;
-            }
-            &:focus {
-                outline: none !important;
-            }
-        }
+    > div: nth-of-type(1) {
+        margin: 60px 0;
     }
-    div:last-child {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        a {
-            border: 1px solid #FFF;
-            border-radius: 50px;
+    div {        
+        .input-range__label--min {
+            visibility: hidden;
+        }
+        .input-range__label--max {
+            visibility: hidden;
+        }
+        .input-range__track {
+            background: #E3F5E9;
+            height: 13px;
+        }
+        .input-range__track:first-child {
+            border-radius: 0px;
+        }
+        .input-range__track--active {
+            background: #79cc90;
+        }
+        .input-range__slider {            
+            background: url(${Images.slider});
+            width: 26px;
+            height: 40px;
+            border: none;
+            border-radius: 0;
+            outline: none;
+            margin: -55px 0 0 -13px;  
+            &:active {
+                transform: scale(1.1);
+            }          
+        }    
+        .input-range__label {
+            color: black;
+            font-family: 'NudistaLight';
+        }
+        .input-range__label--value {
+            top: 1.5rem;
+        }
+        .input-range__label-container {
             background-color: #E3F5E9;
-            padding: 10px 30px;
+            border-radius: 25px;
             display: flex;
             justify-content: center;
-            align-items: center;
-            text-transform: uppercase;  
-            margin: 20px 80px 0;                     
-        }
-        @media(max-width:1124px){
-            a:first-child {
-                margin: 20px 10vw 0 5vw;
-            }
-            a:last-child {
-                margin: 20px 5vw 0 10vw;
-            }
-        }
-        @media(max-width:492px){
-            a {
-                font-size: 12px;
-                padding: 10px 6vw;
-            }
-            a:first-child {
-                margin: 20px 10vw 0 0;
-            }
-            a:last-child {
-                margin: 20px 0 0 10vw;
-            }
+            width: 130px;
+            height: 23px;            
+            padding-top: 10px;
+            font-size: 15px;            
         }
     }
     @media(max-width:1124px){

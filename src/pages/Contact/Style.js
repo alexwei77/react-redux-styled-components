@@ -25,13 +25,16 @@ export const Info = styled.div`
     display: flex;
     flex-direction: column;
     margin: auto;
-    max-width: 800px;
+    max-width: 800px;    
     h1 {
         line-height: 0;
     }
     p {
         font-size: 17px;
         line-height: 30px;
+    }
+    P:nth-of-type(2) {
+        margin-top: -15px;
     }
     a {
         color: #4cbf69;

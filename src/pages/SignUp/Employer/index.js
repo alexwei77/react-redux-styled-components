@@ -21,7 +21,7 @@ const styles = {
 }
 
 class SignUp extends Component {
-
+    
     getText = (e) => {        
         if(e.keyCode === 13 && e.target.value) {            
             console.log(e.target.value)            
@@ -34,7 +34,7 @@ class SignUp extends Component {
 
     render() {
         return (
-            <Wrapper>
+            <Wrapper>                                
                 <Header />
                 <Heading>Tell me more about Agentify</Heading>                              
                 <Form>

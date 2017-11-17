@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
     -webkit-transition: 0.5s;
 
     &:hover, &:focus {
-        background-color: #E3F5E9;
+        background-color: #79cc90;
         color: #FFF;
         cursor: pointer;
     }

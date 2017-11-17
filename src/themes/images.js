@@ -7,7 +7,7 @@ const images = {
     talent : '/assets/svgs/talent.svg',
     hambugerButton : '/assets/svgs/menu.svg',
     xButton: '/assets/svgs/xButton.svg',
-    login : '/assets/icons/profile.png',
+    login : '/assets/svgs/login.svg',
     facebook_home: '/assets/svgs/facebook.svg',
     facebook : '/assets/svgs/facebook-icon.svg',
     linkedin_home: '/assets/svgs/linkedin.svg',
@@ -30,7 +30,8 @@ const images = {
     logo_footer: '/assets/svgs/logo_footer.svg',
     logo_home: '/assets/svgs/logo_home.svg',
     aboutUs: '/assets/images/about.png',
-    marker: '/assets/images/marker1.png'
+    marker: '/assets/images/marker1.png',
+    slider: '/assets/svgs/slider.svg'
 }
 
 export default images;

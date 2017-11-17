@@ -46,7 +46,7 @@ class Standard extends Component {
                 { this.props.type === 'talent' ?
                     <p>
                     By focusing not only on Experience and Skills, but also on Personality and Culture fit, we make sure
-                     that you’re not only choosing the right employer, but also get more opportunities.<br/><br/>                    
+                    that you’re not only choosing the right employer, but also get more opportunities.<br/><br/>                    
                     And it’s free. Forever.                    
                     </p> : 
                     <p>

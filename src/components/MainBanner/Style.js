@@ -150,24 +150,31 @@ export const Arrow = styled.div`
     @keyframes scrolldown {
         0% {            
             bottom: 0px;
+            opacity: 0.9
         }
         10% {            
             bottom: 3px;
+            opacity: 0.8
         }
         20% {            
             bottom: 6px;
+            opacity: 0.7
         }
         30% {            
             bottom: 9px;
+            opacity: 0.6
         }
         40% {            
             bottom: 12px;
+            opacity: 0.5
         }
         50% {            
             bottom: 15px;
+            opacity: 0.4
         }       
         100% {            
             bottom: 0px;
+            opacity: 1
         }
     }
     @media(max-width:767px){

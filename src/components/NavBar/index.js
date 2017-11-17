@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { browserHistory } from 'react-router'
-import $ from 'jquery'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { isMobile } from 'react-device-detect';
 
 import Model from '../Model'
 import { 
@@ -12,12 +12,14 @@ import {
     EditButton,
     Img, 
     Nav, 
-    Menu, 
-    LoginButton, 
-    Container } from './Style'
+    Menu,
+    MobileMenu, 
+    LoginButton,
+    MobileLoginButton } from './Style'
 import Images from '../../themes/images'
 import { getEditState } from '../../actions/auth'
 import { reset } from '../../reducers'
+import { disableScrolling, enableScrolling } from '../../jquery';
 
 class Navigation extends Component {
     constructor() {
@@ -25,37 +27,43 @@ class Navigation extends Component {
         this.state = {
             isActive: false,
             isHover: false,
-            switched: false,
-            isEditable: false
+            switched: false,            
         }      
     }
     
+    scrollingOnMobile = () => {        
+        if(this.state.isActive){
+            enableScrolling('mobile')
+        } 
+        else {       
+            disableScrolling('mobile')
+        }
+    }
+
     toggleNavigation = () => {
         this.setState({
             isActive: !this.state.isActive
-        })
-  
+        })  
         if(!this.state.isActive){
-            $("body").css({"overflow": "hidden"})
+            disableScrolling('desktop')                  
         } else {
-            $("body").css("overflow", "visible")
+            enableScrolling('desktop')            
         }        
+        this.scrollingOnMobile()
     }
     
     navigationPage = (path) => {
         this.setState({
             isActive: !this.state.isActive
         })
-        $("body").css("overflow", "visible")
+        enableScrolling('desktop')      
+        enableScrolling('mobile')
         browserHistory.push(path)
     } 
     
     toggleEdit = () => {
-        let isEditable = this.state.isEditable ? false : true        
+        let isEditable = this.props.isEditable ? false : true        
         this.props.actions.getEditState(isEditable);
-        this.setState({
-            isEditable: isEditable
-        })
     }
 
     toggleAction = () => {
@@ -66,33 +74,72 @@ class Navigation extends Component {
                     this.setState({
                         isActive: false
                     })
-                    $("body").css("overflow", "visible")
+                    this.scrollingOnMobile()
+                    enableScrolling('desktop')      
                 }         
             } else {
                 if(this.state.isActive){
                     this.setState({
                         isActive: false
                     })
-                    $("body").css("overflow", "visible")
+                    this.scrollingOnMobile()
+                    enableScrolling('desktop')      
                 }
-            }
+            }            
             browserHistory.push('/signup/talent')
         } else {
             browserHistory.push('/signup/employer')
         }
     }
 
+    menu = () => {
+        const { save, edit } = this.props
+        if(isMobile){
+            return (
+                <MobileMenu save={save} edit={edit} onClick={this.toggleNavigation}>                        
+                    <img src={Images.hambugerButton} alt="menu"/>                    
+                </MobileMenu>
+            )                 
+        } else
+            return (
+                <Menu save={save} edit={edit} onClick={this.toggleNavigation}>                        
+                    <img src={Images.hambugerButton} alt="menu"/>
+                    <img src={Images.hoverMenu} alt="hover_menu"/>
+                </Menu>
+            )
+    }
+
+    loginButton = () => {
+        const { save, edit } = this.props
+        if(isMobile){
+            return (
+                <MobileLoginButton save={save} edit={edit} onClick={() =>this.toggleAction()}>
+                    <img src={Images.login} alt="login"/>                                                                       
+                </MobileLoginButton>
+            )
+        } else 
+            return (
+                <LoginButton save={save} edit={edit} onClick={() =>this.toggleAction()}>
+                    <img src={Images.login} alt="login"/>
+                    <img src={Images.loginHover} alt="hover_login"/>                                                   
+                </LoginButton>
+            )
+    }
+
     render() {
-        const { landing, save, edit, type } = this.props
+        const { landing, edit, type, isEditable } = this.props
         return (
             <Wrapper>
                 <ModelWrapper landing={landing}>
                     <Model />
                 </ModelWrapper>
                 {/* <SaveButton save={save}>Save for later</SaveButton> */}
-                <EditButton edit={edit} onClick={() =>this.toggleEdit()}>Edit profile</EditButton>
+                <EditButton flag={isEditable} edit={edit} onClick={() =>this.toggleEdit()}>
+                    { isEditable ? 'Save' : 'Edit profile' }
+                </EditButton>
                 { !this.state.isActive ? 
-                    <Menu save={save} edit={edit} onClick={this.toggleNavigation}/> :  <Img onClick={this.toggleNavigation} src={Images.xButton} alt="" style={{width:'42px'}}/>
+                    this.menu()
+                    :  <Img onClick={this.toggleNavigation} src={Images.xButton} alt=""/>
                 }                                             
                 <Nav className={this.state.isActive ? "active" : ""} >
                     <li><a onClick={() => this.navigationPage('/home')}>Home</a></li>
@@ -105,12 +152,10 @@ class Navigation extends Component {
                     <li><a onClick={() => this.navigationPage('/contact')}>Contact</a></li>
                     <li><a onClick={() => this.navigationPage('/privacy')}>Privacy and GDPR</a></li>
                     <li><a onClick={() => this.navigationPage('/faq')}>FAQ</a></li>
-                    <li><a onClick={() => window.location.assign('https://www.linkedin.com')}>LinkedIn</a></li>
-                    <li><a onClick={() => window.location.assign('https://www.facebook.com')}>Facebook</a></li>
-                </Nav>
-                <Container save={save} edit={edit}>
-                    <LoginButton onClick={() =>this.toggleAction()}/>
-                </Container>                                          
+                    <li><a onClick={() => window.location.assign('https://www.linkedin.com/company/agentify/')}>LinkedIn</a></li>
+                    <li><a onClick={() => window.location.assign('https://www.facebook.com/agentify.me/')}>Facebook</a></li>
+                </Nav>  
+                { this.loginButton() }                              
             </Wrapper>
         )
     }
@@ -120,7 +165,8 @@ class Navigation extends Component {
 const mapStateToProps = (state) => {
     return {
         type: state.auth.type,
-        isLoggedIn: state.auth.isLoggedIn
+        isLoggedIn: state.auth.isLoggedIn,
+        isEditable: state.auth.isEditable
     }
 }
 
