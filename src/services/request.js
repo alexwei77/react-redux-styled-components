@@ -1,14 +1,17 @@
 import $ from 'jquery';
 
-export const request = (step, data) => {
+export const request = (step, data, method) => {
     
-    const url = `****/${step}`        
-    console.log('request', data)
-    const query = {        
+    const url = `https://my.agentify.me/api/V0/${step}`        
+    
+    const query = method === "GET" ? {        
           "url": url,
-          "method": "POST",
-          "data": data
-        }
+          "method": method
+        } : {        
+            "url": url,
+            "method": method,
+            "data": data
+          }
         
     return $.ajax(query).done(data => {              
         return data        

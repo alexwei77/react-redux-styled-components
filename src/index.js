@@ -11,9 +11,9 @@ import ReactGA from 'react-ga'
 import mixpanel from 'mixpanel-browser'
 import MixpanelProvider from 'react-mixpanel'
 
-mixpanel.init("***")
+mixpanel.init("70d40c11476f564b54bc2cdca8c51526")
 
-ReactGA.initialize('UA-***', {
+ReactGA.initialize('UA-108603873-1', {
     debug: false
 })
 

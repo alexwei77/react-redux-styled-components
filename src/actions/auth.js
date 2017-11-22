@@ -4,7 +4,7 @@ import { request } from '../services/request';
 export function signUpRequest(step, userInfo){
     return function (dispatch) {
         return new Promise((resolve, reject) => {
-            request(step, userInfo)
+            request(step, userInfo, "POST")
                 .then(response => {                                      
                     dispatch({
                         type: Types.SIGNUP_SUCCESS,
@@ -25,9 +25,9 @@ export function signUpRequest(step, userInfo){
 }
 
 export function sendMessage(step, data){
-    return function (dispatch) {
+    return function () {
         return new Promise((resolve, reject) => {
-            request(step, data)
+            request(step, data, "POST")
                 .then(response => {                    
                     resolve(true);
                 })
@@ -39,14 +39,14 @@ export function sendMessage(step, data){
     }
 }
 
-export function getUser(firstName, lastName, email){
-    return {
-        type: Types.GET_USER,
-        firstName,
-        lastName,
-        email
-    };
-}
+// export function getUser(firstName, lastName, email){
+//     return {
+//         type: Types.GET_USER,
+//         firstName,
+//         lastName,
+//         email
+//     };
+// }
 
 export function changeType(signUpType){
     return {

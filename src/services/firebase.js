@@ -2,12 +2,12 @@ import * as firebase from 'firebase';
 
 // should go in a secret file
 const config = {
-    apiKey: "",
-    authDomain: "",
-    databaseURL: "",
-    projectId: "",
+    apiKey: "AIzaSyAPiu11g13ZyYBpuw4y-ykCQcpCbYq2raQ",
+    authDomain: "agentify-candidate.firebaseapp.com",
+    databaseURL: "https://agentify-candidate.firebaseio.com",
+    projectId: "agentify-candidate",
     storageBucket: "",
-    messagingSenderId: ""
+    messagingSenderId: "865673088743"
 };
 firebase.initializeApp(config);
 

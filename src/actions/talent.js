@@ -31,9 +31,9 @@ export const updateCategory = (key, data) => {
 }
 
 export function postSignup2Data(step, data){
-    return function (dispatch) {
+    return function () {
         return new Promise((resolve, reject) => {
-            request(step, data)
+            request(step, data, "POST")
                 .then(response => {
                     resolve(true);
                 })
@@ -46,9 +46,39 @@ export function postSignup2Data(step, data){
 }
 
 export function postSubmitionData(step, data){
-    return function (dispatch) {
+    return function () {
         return new Promise((resolve, reject) => {
-            request(step, data)
+            request(step, data, "POST")
+                .then(response => {                  
+                    resolve(true);
+                })
+                .catch(error => {
+                    console.log('Error', error)                    
+                    reject(false);
+                })
+        })
+    }
+}
+
+export function getProfileInfo(step){
+    return function () {
+        return new Promise((resolve, reject) => {
+            request(step, null, "GET")
+                .then(response => {                  
+                    resolve(response);
+                })
+                .catch(error => {
+                    console.log('Error', error)                    
+                    reject(false);
+                })
+        })
+    }
+}
+
+export function updateProfileInfo(step, data){
+    return function () {
+        return new Promise((resolve, reject) => {
+            request(step, data, "PUT")
                 .then(response => {                  
                     resolve(true);
                 })
